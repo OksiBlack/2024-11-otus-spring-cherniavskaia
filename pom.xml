@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>ru.otus.hw</groupId>
-    <artifactId>home_works</artifactId>
+    <artifactId>home-works</artifactId>
     <version>1.0</version>
 
     <packaging>pom</packaging>
@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>6.2.1</spring.version>
         <opencsv.version>5.9</opencsv.version>
-        <junit.version>5.10.2</junit.version>
+        <junit.version>5.11.3</junit.version>
         <mockito.version>5.10.0</mockito.version>
         <assertj.version>3.25.2</assertj.version>
         <lombok.version>1.18.32</lombok.version>
