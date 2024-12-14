@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import ru.otus.hw.config.TestFileNameProvider;
 import ru.otus.hw.dao.dto.QuestionDto;
 import ru.otus.hw.domain.Question;
-import ru.otus.hw.exceptions.QuestionReadException;
+import ru.otus.hw.exception.QuestionReadException;
 
 import java.io.IOException;
 import java.io.InputStream;
