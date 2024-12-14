@@ -23,23 +23,17 @@
         </constructor-arg>
         <constructor-arg name="questionDao" ref="questionDao">
         </constructor-arg>
-        <constructor-arg name="questionPrinter" ref="questionPrinter">
+        <constructor-arg name="questionFormatter" ref="questionFormatter">
         </constructor-arg>
     </bean>
 
-    <bean id="questionPrinter" class="ru.otus.hw.service.QuestionPrinterImpl">
-        <constructor-arg name="ioService" ref="ioService">
-        </constructor-arg>
-    </bean>
+    <bean id="questionFormatter" class="ru.otus.hw.service.QuestionFormatterImpl"/>
 
     <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">
         <constructor-arg name="testService" ref="testService">
         </constructor-arg>
 
     </bean>
-
-
-
 
     <bean id="answerCsvConverter" class="ru.otus.hw.dao.dto.AnswerCsvConverter"/>
 

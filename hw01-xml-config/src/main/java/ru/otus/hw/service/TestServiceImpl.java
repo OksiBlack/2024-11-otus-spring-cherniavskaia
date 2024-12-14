@@ -1,9 +1,11 @@
 package ru.otus.hw.service;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+
 import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Question;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
@@ -12,13 +14,16 @@ public class TestServiceImpl implements TestService {
 
     private final QuestionDao questionDao;
 
-    private final QuestionPrinter questionPrinter;
+    private final QuestionFormatter questionFormatter;
 
     @Override
     public void executeTest() {
         ioService.printFormattedLine("Please answer the questions below:");
         List<Question> all = questionDao.findAll();
 
-        all.forEach(questionPrinter::printQuestion);
+        List<String> questionsFormatted =
+                all.stream().map(questionFormatter::formatQuestion).toList();
+
+        questionsFormatted.forEach(ioService::printFormattedLine);
     }
 }
