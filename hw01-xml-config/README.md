@@ -32,6 +32,7 @@ Scanner, PrintStream и другие стандартные типы в конт
 
 Приложение должно корректно запускаться с помощью "java -jar"
 
+java -jar target/hw01-xml-config-1.0-shaded.jar
 
 Заготовка для выполнения работы: https://github.com/OtusTeam/Spring/tree/master/templates/hw01-xml-config
 
