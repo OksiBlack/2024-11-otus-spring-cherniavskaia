@@ -4,5 +4,6 @@ public class FormattingConstants {
     public static final String EMPTY = "";
 
     private FormattingConstants() {
+
     }
 }
