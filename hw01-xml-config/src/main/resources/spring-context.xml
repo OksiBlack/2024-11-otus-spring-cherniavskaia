@@ -6,9 +6,43 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="ioService" class="ru.otus.hw.service.StreamsIOService">
+    <bean id="ioService" class="ru.otus.hw.service.StreamIOService">
         <constructor-arg index="0">
             <util:constant static-field="java.lang.System.out"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="testService" class="ru.otus.hw.service.TestServiceImpl">
+        <constructor-arg name="ioService" ref="ioService">
+        </constructor-arg>
+        <constructor-arg name="csvQuestionDao" ref="csvQuestionDao">
+        </constructor-arg>
+        <constructor-arg name="questionPrinter" ref="questionPrinter">
+        </constructor-arg>
+    </bean>
+
+    <bean id="questionPrinter" class="ru.otus.hw.service.QuestionPrinterImpl">
+        <constructor-arg name="ioService" ref="ioService">
+        </constructor-arg>
+    </bean>
+
+    <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">
+        <constructor-arg name="testService" ref="testService">
+        </constructor-arg>
+
+    </bean>
+
+
+    <bean id="csvQuestionDao" class="ru.otus.hw.dao.CsvQuestionDao">
+        <constructor-arg name="fileNameProvider" ref="appProperties">
+
+        </constructor-arg>
+    </bean>
+
+    <bean id="answerCsvConverter" class="ru.otus.hw.dao.dto.AnswerCsvConverter"/>
+
+    <bean id="appProperties" class="ru.otus.hw.config.AppProperties">
+        <constructor-arg index="0" name="testFileName" value="questions.csv">
         </constructor-arg>
     </bean>
 
