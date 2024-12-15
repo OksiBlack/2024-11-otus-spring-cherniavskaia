@@ -10,7 +10,7 @@ public class QuestionFormatterImpl implements QuestionFormatter {
     @Override
     public String formatQuestion(Question question) {
         StringBuilder result = new StringBuilder();
-        result.append(System.lineSeparator()).append(question.text()).append("\nOptions: \n");
+        result.append(System.lineSeparator()).append(question.text()).append("\n\nOptions: \n");
 
         List<Answer> answers = question.answers();
         for (int num = 0; num < answers.size(); num++) {
