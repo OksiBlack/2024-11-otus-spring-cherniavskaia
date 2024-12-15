@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="ioService" class="ru.otus.hw.service.StreamIOService">
+        <constructor-arg index="0">
+            <util:constant static-field="java.lang.System.out"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="questionDao" class="ru.otus.hw.dao.CsvQuestionDao">
+        <constructor-arg name="fileNameProvider" ref="appProperties">
+
+        </constructor-arg>
+    </bean>
+
+    <bean id="testService" class="ru.otus.hw.service.TestServiceImpl">
+        <constructor-arg name="ioService" ref="ioService">
+        </constructor-arg>
+        <constructor-arg name="questionDao" ref="questionDao">
+        </constructor-arg>
+        <constructor-arg name="questionFormatter" ref="questionFormatter">
+        </constructor-arg>
+    </bean>
+
+    <bean id="questionFormatter" class="ru.otus.hw.service.QuestionFormatterImpl"/>
+
+    <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">
+        <constructor-arg name="testService" ref="testService">
+        </constructor-arg>
+
+    </bean>
+
+    <bean id="answerCsvConverter" class="ru.otus.hw.dao.dto.AnswerCsvConverter"/>
+
+    <bean id="appProperties" class="ru.otus.hw.config.AppProperties">
+        <constructor-arg index="0" name="testFileName" value="questions.csv">
+        </constructor-arg>
+    </bean>
+
+</beans>
