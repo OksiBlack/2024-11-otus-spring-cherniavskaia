@@ -1,4 +1,3 @@
 test:
   fileName: questions.csv
-  rightAnswersCountToPass: 5
   rightAnswerPercentToPass: 70

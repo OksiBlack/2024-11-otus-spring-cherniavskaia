@@ -121,7 +121,39 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+
+                        <java>
+                            <!-- no need to specify files, inferred automatically, but you can if you want -->
+
+                            <!-- apply a specific flavor of google-java-format and reflow long strings -->
+                            <googleJavaFormat>
+                                <style>AOSP</style>
+                                <reflowLongStrings>true</reflowLongStrings>
+                                <formatJavadoc>true</formatJavadoc>
+                            </googleJavaFormat>
+                            <removeUnusedImports/>
+                        </java>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -145,32 +177,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless.version}</version>
-                <executions>
-                    <!--                    <execution>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>check</goal>-->
-                    <!--                        </goals>-->
-                    <!--                    </execution>-->
-                </executions>
-                <configuration>
-
-                    <java>
-                        <!-- no need to specify files, inferred automatically, but you can if you want -->
-
-                        <!-- apply a specific flavor of google-java-format and reflow long strings -->
-                        <googleJavaFormat>
-                            <style>AOSP</style>
-                            <reflowLongStrings>true</reflowLongStrings>
-                            <formatJavadoc>true</formatJavadoc>
-                        </googleJavaFormat>
-                        <removeUnusedImports/>
-                    </java>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
