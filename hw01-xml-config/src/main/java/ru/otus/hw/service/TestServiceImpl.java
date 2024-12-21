@@ -21,9 +21,10 @@ public class TestServiceImpl implements TestService {
         ioService.printFormattedLine("Please answer the questions below:");
         List<Question> all = questionDao.findAll();
 
-        List<String> questionsFormatted =
-                all.stream().map(questionFormatter::formatQuestion).toList();
+        formatQuestions(all).forEach(ioService::printFormattedLine);
+    }
 
-        questionsFormatted.forEach(ioService::printFormattedLine);
+    private List<String> formatQuestions(List<Question> all) {
+        return all.stream().map(questionFormatter::formatQuestion).toList();
     }
 }
