@@ -22,10 +22,10 @@ public class ResultServiceImpl implements ResultService {
         ioService.printFormattedLine("Answered questions count: %d", answersOverall);
         int rightAnswersCount = testResult.getRightAnswersCount();
         ioService.printFormattedLine("Right answers count: %d", rightAnswersCount);
+        double rightAnswersPercent = getActualRightAnswersPercent(rightAnswersCount, answersOverall);
+        ioService.printFormattedLine("Your score: %.2f%%", rightAnswersPercent);
 
-        if (getActualRightAnswersPercent(rightAnswersCount, answersOverall) >=
-            testConfig.getRightAnswerPercentToPass()
-        ) {
+        if (rightAnswersPercent >= testConfig.getRightAnswerPercentToPass()) {
             ioService.printLine("Congratulations, you have passed the test!!!");
             return;
         }
