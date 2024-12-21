@@ -1,0 +1,8 @@
+# Добавить сюда своих вопросов. Эту строку надо пропустить при настройке CsvToBean (withSkipLines)
+How should resources be loaded form jar in Java?;ClassLoader#geResourceAsStream or ClassPathResource#getInputStream%true|ClassLoader#geResource#getFile + FileReader%false|Wingardium Leviosa%false
+Which option is a good way to handle the exception?;@SneakyThrow%false|e.printStackTrace()%false|Rethrow with wrapping in business exception (for example, QuestionReadException)%true|Ignoring exception%false
+How Can We Inject Beans in Spring?;Constructor%true|Setter%true|Field%true
+What Is the Default Bean Scope in Spring Framework?;Singleton%true|Prototype%false|Request%false|Session%false|Global Session%false
+What weaving type does not exist?;Load type weaving%false|Reflection weaving%true|Compile time weaving%false|Runtime weaving%false
+What proxying mechanism works via interfaces?;Java JDK dynamic proxy%true|CGLIB proxy%false
+What proxying mechanism works via inheritance?;Java JDK dynamic proxy%fase|CGLIB proxy%true
