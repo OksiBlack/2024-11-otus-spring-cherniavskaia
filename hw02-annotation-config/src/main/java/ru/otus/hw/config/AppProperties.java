@@ -8,16 +8,13 @@ import org.springframework.stereotype.Component;
 @Data
 public class AppProperties implements TestConfig, TestFileNameProvider {
 
-    private int rightAnswersCountToPass;
-
     private int rightAnswerPercentToPass;
 
     private String testFileName;
 
-    public AppProperties(@Value("${test.rightAnswersCountToPass}") int rightAnswersCountToPass,
-                         @Value("${test.rightAnswerPercentToPass}") int rightAnswerPercentToPass,
-                         @Value("${test.fileName}") String testFileName) {
-        this.rightAnswersCountToPass = rightAnswersCountToPass;
+    public AppProperties(
+        @Value("${test.rightAnswerPercentToPass}") int rightAnswerPercentToPass,
+        @Value("${test.fileName}") String testFileName) {
         this.testFileName = testFileName;
         this.rightAnswerPercentToPass = rightAnswerPercentToPass;
     }
