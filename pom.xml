@@ -26,10 +26,9 @@
         <mockito.version>5.10.0</mockito.version>
         <assertj.version>3.25.2</assertj.version>
         <lombok.version>1.18.36</lombok.version>
-        <checkstyle-plugin.version>3.3.1</checkstyle-plugin.version>
+        <checkstyle-plugin.version>3.6.0</checkstyle-plugin.version>
         <checkstyle.version>10.21.0</checkstyle.version>
         <mockito.version>5.4.0</mockito.version>
-<!--        <logback.version>1.5.15</logback.version>-->
         <slf4j.version>2.0.16</slf4j.version>
         <spotless.version>2.43.0</spotless.version>
         <snakeyaml.version>2.3</snakeyaml.version>
@@ -37,6 +36,7 @@
             https://raw.githubusercontent.com/OtusTeam/Spring/master/checkstyle.xml
         </checkstyle.config.url>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
+        <spring-shell.version>3.4.0</spring-shell.version>
     </properties>
     <dependencies>
 
@@ -64,12 +64,6 @@
         </dependency>
 
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-<!--            <version>${logback.version}</version>-->
-        </dependency>
-
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
@@ -81,6 +75,23 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+<!--            <version>2.18.2</version>-->
         </dependency>
 
     </dependencies>
@@ -162,7 +173,9 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <consoleOutput>true</consoleOutput>
                     <configLocation>${checkstyle.config.url}</configLocation>
+                    <outputFileFormat>sarif</outputFileFormat>
                 </configuration>
                 <executions>
                     <execution>
@@ -181,9 +194,24 @@
 
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
     <modules>
         <module>hw01-xml-config</module>
         <module>hw02-annotation-config</module>
         <module>hw03-spring-boot</module>
+        <module>hw04-spring-shell</module>
     </modules>
 </project>
