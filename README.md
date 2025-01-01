@@ -5,5 +5,7 @@ Student: Cherniavskaia Oksana
 
 Homeworks:
 
-1) Task 1
-hw01-xml-config
+1) hw01-xml-config
+2) hw02-annotation-config
+3) hw03-spring-boot
+4) hw04-spring-shell
