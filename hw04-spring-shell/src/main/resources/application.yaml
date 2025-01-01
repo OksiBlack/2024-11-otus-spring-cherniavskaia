@@ -1,0 +1,27 @@
+spring:
+  messages:
+    baseName: messages
+    encoding: UTF-8
+    # Не дает свалиться в системную локаль если не найден файл для переданной в MessageSource
+    # Если false то будут браться сообщения из дефолтного файла, если true, то из файла соответствующего системной локали
+    fallbackToSystemLocale: false
+  main:
+    web-application-type: NONE
+    banner-mode: off
+  shell:
+
+    interactive:
+      enabled: true
+    command:
+      version:
+        show-git-branch: true
+        show-git-commit-id: true
+
+test:
+  right: "dfdfr"
+#  right-answer-percent-to-pass: 88
+  rightAnswerPercentToPass: 78
+  locale: en-US
+  fileNameByLocaleTag:
+    ru-RU: questions_ru.csv
+    en-US: questions.csv
