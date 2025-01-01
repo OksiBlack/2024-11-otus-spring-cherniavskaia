@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TestRunnerServiceImpl implements TestRunnerService, CommandLineRunner {
+public class TestRunnerServiceImpl implements CommandLineRunner {
 
     private final TestService testService;
 
@@ -15,14 +15,9 @@ public class TestRunnerServiceImpl implements TestRunnerService, CommandLineRunn
     private final ResultService resultService;
 
     @Override
-    public void run() {
+    public void run(String... args) throws Exception {
         var student = studentService.determineCurrentStudent();
         var testResult = testService.executeTestFor(student);
         resultService.showResult(testResult);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        run();
     }
 }
