@@ -24,8 +24,8 @@ public class ResultServiceImpl implements ResultService {
         ioService.printFormattedLineLocalized("ResultService.answered.questions.count", answersOverall);
 
         int rightAnswersCount = testResult.getRightAnswersCount();
-        ioService.printFormattedLineLocalized("ResultService.right.answers.count",
-            rightAnswersCount);
+        ioService.printFormattedLineLocalized("ResultService.right.answers.percent",
+            rightAnswersCount + "%");
 
         double rightAnswersPercent = getActualRightAnswersPercent(rightAnswersCount, answersOverall);
 
@@ -40,6 +40,6 @@ public class ResultServiceImpl implements ResultService {
     }
 
     private double getActualRightAnswersPercent(int rightAnswersCount, int answersOverall) {
-        return 100.0 * rightAnswersCount / answersOverall;
+        return 100.00 * rightAnswersCount / answersOverall;
     }
 }
