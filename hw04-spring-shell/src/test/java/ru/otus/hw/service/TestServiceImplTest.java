@@ -30,16 +30,13 @@ class TestServiceImplTest {
     @MockitoBean
     private QuestionDao questionDao;
 
-    @MockitoBean
-    private QuestionFormatter questionFormatter;
-
-    private TestServiceImpl testService;
+    private TestServiceImpl target;
 
     private Student student;
 
     @BeforeEach
     void setUp() {
-        testService = new TestServiceImpl(ioService, questionDao);
+        target = new TestServiceImpl(ioService, questionDao);
 
         student = new Student("Frodo", "Baggins");
     }
@@ -47,7 +44,7 @@ class TestServiceImplTest {
     @DisplayName("No results for null student")
     @Test
     void shouldNotHaveResultsForNullStudent() {
-        TestResult testResult = testService.executeTestFor(null);
+        TestResult testResult = target.executeTestFor(null);
         assertThat(testResult).isNotNull();
         assertThat(testResult.getStudent()).isNull();
         assertThatList(testResult.getAnsweredQuestions()).isEmpty();
@@ -65,7 +62,7 @@ class TestServiceImplTest {
         given(ioService.readAllIntsForRangeWithPrompt(anyInt(), anyInt(), anyString(), anyString()))
             .willReturn(new HashSet<>(Collections.singletonList(1))); //
 
-        TestResult testResult = testService.executeTestFor(student);
+        TestResult testResult = target.executeTestFor(student);
 
         assertThat(testResult).isNotNull();
         assertThat(testResult.getStudent()).isNotNull().isEqualTo(student);

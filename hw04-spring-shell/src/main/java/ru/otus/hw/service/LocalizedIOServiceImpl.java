@@ -1,13 +1,11 @@
 package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @RequiredArgsConstructor
-@Primary
 @Service
 public class LocalizedIOServiceImpl implements LocalizedIOService {
 

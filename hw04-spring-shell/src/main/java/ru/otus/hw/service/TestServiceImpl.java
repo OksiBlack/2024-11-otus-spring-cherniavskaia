@@ -3,9 +3,12 @@ package ru.otus.hw.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.hw.dao.QuestionDao;
+import ru.otus.hw.domain.Answer;
+import ru.otus.hw.domain.Question;
 import ru.otus.hw.domain.Student;
 import ru.otus.hw.domain.TestResult;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -29,7 +32,7 @@ public class TestServiceImpl implements TestService {
 
             Set<Integer> answerNumbers = ioService.readAllIntsForRangeWithPrompt(1,
                 question.answers().size(),
-                QuestionFormatter.formatQuestion(question),
+                formatQuestion(question),
                 "Exception out of range"
             );
 
@@ -37,6 +40,17 @@ public class TestServiceImpl implements TestService {
             testResult.applyAnswer(question, isAnswerValid);
         }
         return testResult;
+    }
+
+    private String formatQuestion(Question question) {
+        StringBuilder result = new StringBuilder();
+
+        List<Answer> answers = question.answers();
+        for (int num = 0; num < answers.size(); num++) {
+            Answer answer = answers.get(num);
+            result.append(String.format("%d) %s%n", num + 1, answer.text()));
+        }
+        return result.toString();
     }
 
 }
