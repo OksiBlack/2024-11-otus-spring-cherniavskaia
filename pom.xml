@@ -91,7 +91,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-<!--            <version>2.18.2</version>-->
         </dependency>
 
     </dependencies>
@@ -213,5 +212,6 @@
         <module>hw02-annotation-config</module>
         <module>hw03-spring-boot</module>
         <module>hw04-spring-shell</module>
+        <module>hw05-jdbc-hard</module>
     </modules>
 </project>
