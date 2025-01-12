@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.otus.hw</groupId>
+        <artifactId>home-works</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>hw05-spring-jdbc</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>hw05-spring-jdbc</name>
+    <properties>
+        <flyway.version>11.1.0</flyway.version>
+        <postgresql.version>42.7.4</postgresql.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+
+<!--                <dependency>-->
+<!--                    <groupId>org.flywaydb</groupId>-->
+<!--                    <artifactId>flyway-database-postgresql</artifactId>-->
+<!--                    <version>${flyway.version}</version>-->
+<!--                    <scope>runtime</scope>-->
+<!--                </dependency>-->
+
+<!--                <dependency>-->
+<!--                    <groupId>org.postgresql</groupId>-->
+<!--                    <artifactId>postgresql</artifactId>-->
+<!--                    <version>${postgresql.version}</version>-->
+<!--                </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: "bookstore"
+      POSTGRES_PORT: "5477"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "nimda"
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+    ports:
+      - "${POSTGRES_PORT}:5432"

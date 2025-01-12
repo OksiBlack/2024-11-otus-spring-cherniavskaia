@@ -1,0 +1,22 @@
+spring:
+
+  datasource:
+    #    url: jdbc:h2:mem:maindb;MODE=MSSQLServer;INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE;
+    url: jdbc:h2:file:./data/demo;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE;
+
+    hikari:
+      schema: BOOKSTORE
+
+  flyway:
+    create-schemas: true
+    baseline-on-migrate: true
+    schemas: BOOKSTORE
+    default-schema: BOOKSTORE
+  shell:
+    interactive:
+      enabled: true
+#  profiles:
+#    active: "docker"
+  docker:
+    compose:
+      lifecycle-management: start_only
