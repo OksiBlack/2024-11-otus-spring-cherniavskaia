@@ -11,13 +11,13 @@ public interface BookService {
 
     List<Book> findAll();
 
-    Book insert(String title, String description,Set<Long> authorsId, Set<Long> genresIds);
+    Book insert(String title, long authorId, Set<Long> genresIds);
 
-    Book update(long id, String title,String description, Set<Long> authorsId, Set<Long> genresIds);
+    Book update(long id, String title, long authorId, Set<Long> genresIds);
 
     void deleteById(long id);
 
     boolean existsById(long id);
 
-    Book upsert(long id, String title, String description, Set<Long> authorIds, Set<Long> genreIds);
+    Book upsert(long id, String title, long authorId, Set<Long> genreIds);
 }

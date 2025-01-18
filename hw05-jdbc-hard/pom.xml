@@ -14,7 +14,6 @@
     <name>hw05-spring-jdbc</name>
     <properties>
         <flyway.version>11.1.0</flyway.version>
-        <postgresql.version>42.7.4</postgresql.version>
     </properties>
 
     <dependencies>

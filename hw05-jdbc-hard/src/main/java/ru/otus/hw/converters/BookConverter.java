@@ -19,16 +19,11 @@ public class BookConverter {
                 .map("{%s}"::formatted)
                 .collect(Collectors.joining(", "));
 
-
-        var authorsString = book.getAuthors().stream()
-            .map(authorConverter::authorToString)
-            .map("{%s}"::formatted)
-            .collect(Collectors.joining(", "));
         return ("Id: %d,bbid 1" +
             "%ntitle: %s,%nauthors: [%s],%ngenres: [%s]").formatted(
                 book.getId(),
                 book.getTitle(),
-                authorsString,
+            authorConverter.authorToString(book.getAuthor()),
                 genresString);
     }
 }

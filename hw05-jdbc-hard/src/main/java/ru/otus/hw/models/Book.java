@@ -14,9 +14,7 @@ public class Book {
 
     private String title;
 
-    private String description;
-
-    private List<Author> authors;
+    private Author author;
 
     private List<Genre> genres;
 }

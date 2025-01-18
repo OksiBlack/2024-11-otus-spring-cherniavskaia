@@ -36,15 +36,15 @@ public class BookCommands {
 
     // bins newBook 1 1,6
     @ShellMethod(value = "Insert book", key = "bins")
-    public String insertBook(String title, String description, Set<Long> authorIds, Set<Long> genreIds) {
-        var savedBook = bookService.insert(title, description, authorIds, genreIds);
+    public String insertBook(String title, Long authorId, Set<Long> genreIds) {
+        var savedBook = bookService.insert(title, authorId, genreIds);
         return bookConverter.bookToString(savedBook);
     }
 
     // bupd 4 editedBook 3 2,5
     @ShellMethod(value = "Update book", key = "bupd")
-    public String updateBook(long id, String title, String description, Set<Long> authorIds, Set<Long> genreIds) {
-        var savedBook = bookService.update(id, title, description, authorIds, genreIds);
+    public String updateBook(long id, String title, Long authorId, Set<Long> genreIds) {
+        var savedBook = bookService.update(id, title, authorId, genreIds);
         return bookConverter.bookToString(savedBook);
     }
 
@@ -63,8 +63,8 @@ public class BookCommands {
     }
 
     @ShellMethod(value = "Upsert book", key = "bups")
-    public String upsertBook(long id, String title, String description, Set<Long> authorIds, Set<Long> genreIds) {
-        var savedBook = bookService.upsert(id, title, description, authorIds, genreIds);
+    public String upsertBook(long id, String title, Long authorId, Set<Long> genreIds) {
+        var savedBook = bookService.upsert(id, title, authorId, genreIds);
         return bookConverter.bookToString(savedBook);
     }
 }
