@@ -34,18 +34,34 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book insert(String title, String description, Set<Long> authorsId, Set<Long> genresIds) {
-        return save(0, title, description, authorsId, genresIds);
+    public Book insert(String title, long authorId, Set<Long> genresIds) {
+        return save(0, title, authorId, genresIds);
     }
 
     @Override
-    public Book update(long id, String title, String description, Set<Long> authorsId, Set<Long> genresIds) {
-        return save(id, title, description, authorsId, genresIds);
+    public Book update(long id, String title, long authorId, Set<Long> genresIds) {
+        return save(id, title, authorId, genresIds);
     }
 
     @Override
     public void deleteById(long id) {
         bookRepository.deleteById(id);
+    }
+
+    private Book save(long id, String title, long authorId, Set<Long> genresIds) {
+        if (isEmpty(genresIds)) {
+            throw new IllegalArgumentException("Genres ids must not be null");
+        }
+
+        var author = authorRepository.findById(authorId)
+            .orElseThrow(() -> new EntityNotFoundException("Author with id %d not found".formatted(authorId)));
+        var genres = genreRepository.findAllByIds(genresIds);
+        if (isEmpty(genres) || genresIds.size() != genres.size()) {
+            throw new EntityNotFoundException("One or all genres with ids %s not found".formatted(genresIds));
+        }
+
+        var book = new Book(id, title, author, genres);
+        return bookRepository.save(book);
     }
 
     @Override
@@ -54,35 +70,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book upsert(long id, String title, String description, Set<Long> authorIds, Set<Long> genreIds) {
+    public Book upsert(long id, String title, long authorId, Set<Long> genreIds) {
         if (existsById(id)) {
-            return update(id, title, description, authorIds, genreIds);
+            return update(id, title, authorId, genreIds);
         } else {
-            return insert(title, description, authorIds, genreIds);
+            return insert(title, authorId, genreIds);
         }
-    }
-
-    private Book save(long id, String title, String description, Set<Long> authorsId, Set<Long> genresIds) {
-        if (isEmpty(genresIds)) {
-            throw new IllegalArgumentException("Genres ids must not be empty or null");
-        }
-
-        if (isEmpty(authorsId)) {
-            throw new IllegalArgumentException("Author ids must not be empty or null");
-        }
-
-        var authors = authorRepository.findAllByIds(authorsId);
-
-        if (isEmpty(authors) || authorsId.size() != authors.size()) {
-            throw new EntityNotFoundException("One or all author with ids %s not found".formatted(authorsId));
-        }
-
-        var genres = genreRepository.findAllByIds(genresIds);
-        if (isEmpty(genres) || genresIds.size() != genres.size()) {
-            throw new EntityNotFoundException("One or all genres with ids %s not found".formatted(genresIds));
-        }
-
-        var book = new Book(id, title, description, authors, genres);
-        return bookRepository.save(book);
     }
 }
