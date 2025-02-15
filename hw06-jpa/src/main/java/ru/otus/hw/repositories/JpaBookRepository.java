@@ -60,16 +60,4 @@ public class JpaBookRepository implements BookRepository {
     public boolean existsById(Long id) {
         return findById(id).isPresent();
     }
-
-    @Override
-    public Book insert(Book book) {
-        em.persist(book);
-        return book;
-    }
-
-    @Override
-    public Book update(Book book) {
-        em.merge(book);
-        return book;
-    }
 }

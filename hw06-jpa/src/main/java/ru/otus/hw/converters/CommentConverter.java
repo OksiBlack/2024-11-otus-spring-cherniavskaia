@@ -14,7 +14,7 @@ public class CommentConverter implements Converter<Comment, CommentDto> {
 
     public String commentToString(CommentDto comment) {
         return "Id: %d, date: %s, text: %s, author: %s"
-            .formatted(comment.getId(), comment.getCommentDate().toString(), comment.getText(), comment.getAuthor());
+            .formatted(comment.getId(), comment.getCreated().toString(), comment.getText(), comment.getAuthor());
     }
 
     @Override
@@ -22,7 +22,7 @@ public class CommentConverter implements Converter<Comment, CommentDto> {
         return CommentDto.builder()
             .id(source.getId())
             .text(source.getText())
-            .commentDate(source.getCommentDate())
+            .created(source.getCreated())
             .book(bookConverter.convert(source.getBook()))
             .author(source.getAuthor())
             .build();

@@ -19,7 +19,7 @@ public class CommentDto {
 
     private String text;
 
-    private LocalDate commentDate;
+    private LocalDate created;
 
     private String author;
 }

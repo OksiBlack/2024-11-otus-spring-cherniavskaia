@@ -15,8 +15,4 @@ public interface BookRepository {
     void deleteById(Long id);
 
     boolean existsById(Long id);
-
-    Book insert(Book book);
-
-    Book update(Book book);
 }

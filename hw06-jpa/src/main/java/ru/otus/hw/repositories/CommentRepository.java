@@ -12,17 +12,13 @@ public interface CommentRepository {
 
     Optional<Comment> findById(Long id);
 
-    Comment update(Comment comment);
-
     List<Comment> findAllByBookId(Long bookId);
 
     List<Comment> findAllByIds(Set<Long> ids);
-
-    Comment insert(Comment comment);
 
     void deleteById(Long id);
 
     boolean existsById(Long id);
 
-    Comment save(Comment expectedComment);
+    Comment save(Comment comment);
 }

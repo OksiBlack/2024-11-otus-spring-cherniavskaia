@@ -31,11 +31,11 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public AuthorDto insert(String fullName) {
+    public AuthorDto create(String fullName) {
         Author author = new Author();
         author.setFullName(fullName);
 
-        return authorConverter.convert(authorRepository.insert(author));
+        return authorConverter.convert(authorRepository.save(author));
     }
 
     @Transactional(readOnly = true)
@@ -54,7 +54,6 @@ public class AuthorServiceImpl implements AuthorService {
             .toList();
     }
 
-
     @Transactional
     @Override
     public void deleteById(Long id) {
@@ -63,22 +62,12 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public AuthorDto updateAuthor(Long id, String fullName) {
+    public AuthorDto update(Long id, String fullName) {
         Author author = new Author();
         author.setFullName(fullName);
         author.setId(id);
 
-        return authorConverter.convert(authorRepository.update(author));
-    }
-
-    @Transactional
-    @Override
-    public AuthorDto upsert(Long id, String fullName) {
-        if (existsById(id)) {
-            return updateAuthor(id, fullName);
-        } else {
-            return insert(fullName);
-        }
+        return authorConverter.convert(authorRepository.save(author));
     }
 
     @Transactional(readOnly = true)

@@ -9,7 +9,7 @@ import java.util.Set;
 public interface AuthorService {
     List<AuthorDto> findAll();
 
-    AuthorDto insert(String fullName);
+    AuthorDto create(String fullName);
 
     Optional<AuthorDto> findById(Long id);
 
@@ -17,9 +17,7 @@ public interface AuthorService {
 
     void deleteById(Long id);
 
-    AuthorDto updateAuthor(Long id, String fullName);
-
-    AuthorDto upsert(Long id, String fullName);
+    AuthorDto update(Long id, String fullName);
 
     boolean existsById(Long id);
 }

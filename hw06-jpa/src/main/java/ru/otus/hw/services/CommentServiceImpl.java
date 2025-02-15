@@ -42,40 +42,34 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public CommentDto insert(String commentText, Long bookId, String author) {
-        return commentConverter.convert(save(null, commentText, bookId, author, LocalDate.now()));
-    }
-
-    @Transactional
-    @Override
-    public CommentDto update(Long id, String commentText, Long bookId, String author) {
-        return commentConverter.convert(save(id, commentText, bookId, author, LocalDate.now()));
-    }
-
-    @Transactional
-    @Override
-    public CommentDto upsert(Long id, String commentText, Long bookId, String author) {
-        if (existsById(id)) {
-            return update(id, commentText, bookId, author);
-        } else {
-            return insert(commentText, bookId, author);
-        }
-    }
-
-    private Comment save(Long id, String commentText, Long bookId, String author, LocalDate commentDate) {
+    public CommentDto create(String commentText, Long bookId, String author) {
 
         var book = bookRepository.findById(bookId)
             .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(bookId)));
 
         Comment comment = Comment.builder()
-            .id(id)
-            .commentDate(commentDate)
+            .created(LocalDate.now())
+            .book(book)
             .author(author)
             .text(commentText)
-            .book(book)
             .build();
 
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
+        return commentConverter.convert(comment);
+    }
+
+    @Transactional
+    @Override
+    public CommentDto update(Long id, String commentText, String commentAuthorName) {
+
+        var comment = commentRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
+
+        comment.setText(commentText);
+        comment.setAuthor(commentAuthorName);
+
+        commentRepository.save(comment);
+        return commentConverter.convert(comment);
     }
 
     @Transactional

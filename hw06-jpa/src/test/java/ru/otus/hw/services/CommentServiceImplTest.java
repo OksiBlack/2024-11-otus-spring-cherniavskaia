@@ -73,7 +73,7 @@ class CommentServiceImplTest {
     @Test
     @Order(3)
     void insert() {
-        var insertCommentDto = service.insert(INSERT_CONTENT_VALUE, BOOK_ID, "zzzz");
+        var insertCommentDto = service.create(INSERT_CONTENT_VALUE, BOOK_ID, "zzzz");
         var optionalExpectedCommentDto = service.findById(insertCommentDto.getId());
 
         assertThat(insertCommentDto).isEqualTo(optionalExpectedCommentDto.get());
@@ -89,7 +89,7 @@ class CommentServiceImplTest {
     @Test
     @Order(4)
     void update() {
-        var insertCommentDto = service.update(NEW_COMMENT_ID, UPDATE_CONTENT_VALUE, 1L, "zzz");
+        var insertCommentDto = service.update(NEW_COMMENT_ID, UPDATE_CONTENT_VALUE,  "zzz");
         var optionalExpectedCommentDto = service.findById(insertCommentDto.getId());
 
         assertThat(insertCommentDto).isEqualTo(optionalExpectedCommentDto.get());
