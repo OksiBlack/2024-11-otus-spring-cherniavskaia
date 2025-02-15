@@ -37,7 +37,7 @@ public class BookCommands {
     // bins newBook 1 1,6
     @ShellMethod(value = "Insert book", key = "bins")
     public String insertBook(String title, Long authorId, Set<Long> genreIds) {
-        var savedBook = bookService.insert(title, authorId, genreIds);
+        var savedBook = bookService.create(title, authorId, genreIds);
         return bookConverter.bookToString(savedBook);
     }
 
@@ -60,11 +60,5 @@ public class BookCommands {
 
         log.info("exists: {} for book with id {}", id, existsById);
         return existsById;
-    }
-
-    @ShellMethod(value = "Upsert book", key = "bups")
-    public String upsertBook(long id, String title, Long authorId, Set<Long> genreIds) {
-        var savedBook = bookService.upsert(id, title, authorId, genreIds);
-        return bookConverter.bookToString(savedBook);
     }
 }

@@ -40,17 +40,7 @@ public class JpaCommentRepository implements CommentRepository {
         TypedQuery<Comment> query = em.createQuery("SELECT c from Comment c WHERE id IN (:ids)",
             Comment.class
         );
-
-        EntityGraph<?> entityGraph = em.getEntityGraph(COMMENT_BOOK_GRAPH);
-        query.setParameter("ids", ids);
-        query.setHint("jakarta.persistence.fetchgraph", entityGraph);
         return query.getResultList();
-    }
-
-    @Override
-    public Comment insert(Comment comment) {
-        em.persist(comment);
-        return comment;
     }
 
     @Override
@@ -67,15 +57,11 @@ public class JpaCommentRepository implements CommentRepository {
     @Override
     public Comment save(Comment comment) {
         if (comment.getId() == null) {
-            return insert(comment);
+            em.persist(comment);
+            return comment;
         } else {
-            return update(comment);
+            return em.merge(comment);
         }
-    }
-
-    @Override
-    public Comment update(Comment comment) {
-        return em.merge(comment);
     }
 
     @Override

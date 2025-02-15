@@ -11,7 +11,7 @@ public interface BookService {
 
     List<BookDto> findAll();
 
-    BookDto insert(String title, Long authorId, Set<Long> genresIds);
+    BookDto create(String title, Long authorId, Set<Long> genresIds);
 
     BookDto update(Long id, String title, Long authorId, Set<Long> genresIds);
 
@@ -19,5 +19,4 @@ public interface BookService {
 
     boolean existsById(Long id);
 
-    BookDto upsert(Long id, String title, Long authorId, Set<Long> genreIds);
 }

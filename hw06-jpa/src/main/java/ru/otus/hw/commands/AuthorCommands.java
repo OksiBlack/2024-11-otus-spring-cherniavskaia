@@ -30,19 +30,13 @@ public class AuthorCommands {
 
     @ShellMethod(value = "Insert author", key = "ains")
     public String insertAuthor(String fullName) {
-        var author = authorService.insert(fullName);
+        var author = authorService.create(fullName);
         return authorConverter.authorToString(author);
     }
 
     @ShellMethod(value = "Update author", key = "aupd")
     public String updateAuthor(long id, String fullName) {
-        AuthorDto author = authorService.updateAuthor(id, fullName);
-        return authorConverter.authorToString(author);
-    }
-
-    @ShellMethod(value = "Upsert author", key = "aups")
-    public String upsertAuthor(long id, String fullName) {
-        AuthorDto author = authorService.upsert(id, fullName);
+        AuthorDto author = authorService.update(id, fullName);
         return authorConverter.authorToString(author);
     }
 

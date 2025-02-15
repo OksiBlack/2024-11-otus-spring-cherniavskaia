@@ -71,7 +71,7 @@ class BookServiceImplTest {
     @Test
     @Order(3)
     void insert() {
-        var insertBookDto = service.insert("BookTitle_4", 1L, setOf(3L));
+        var insertBookDto = service.create("BookTitle_4", 1L, setOf(3L));
         var optionalExpectedBookDto = service.findById(insertBookDto.getId());
 
         assertThat(insertBookDto).isEqualTo(optionalExpectedBookDto.get());

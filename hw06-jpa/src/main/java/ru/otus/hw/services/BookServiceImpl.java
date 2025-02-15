@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto insert(String title, Long authorId, Set<Long> genresIds) {
+    public BookDto create(String title, Long authorId, Set<Long> genresIds) {
         return save(null, title, authorId, genresIds);
     }
 
@@ -82,15 +82,5 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean existsById(Long id) {
         return bookRepository.existsById(id);
-    }
-
-    @Transactional
-    @Override
-    public BookDto upsert(Long id, String title, Long authorId, Set<Long> genreIds) {
-        if (existsById(id)) {
-            return update(id, title, authorId, genreIds);
-        } else {
-            return insert(title, authorId, genreIds);
-        }
     }
 }

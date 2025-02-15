@@ -24,6 +24,9 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.List;
 import java.util.Objects;
 
+import static ru.otus.hw.repositories.EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH;
+import static ru.otus.hw.repositories.EntityGraphNames.FULL_BOOK_ENTITY_GRAPH;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,9 +35,12 @@ import java.util.Objects;
 @Builder
 @Table(name = "books")
 @ToString
-@NamedEntityGraph(name = "book-entity-graph",
-    attributeNodes = {@NamedAttributeNode("genres"),
-        @NamedAttributeNode("author")})
+@NamedEntityGraph(name = FULL_BOOK_ENTITY_GRAPH,
+    attributeNodes = {@NamedAttributeNode("genres"), @NamedAttributeNode("author")}
+)
+@NamedEntityGraph(name = BOOK_AUTHOR_ENTITY_GRAPH,
+    attributeNodes = {@NamedAttributeNode("author")}
+)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

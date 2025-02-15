@@ -11,17 +11,13 @@ public interface GenreService {
 
     List<GenreDto> findAllByIds(Set<Long> ids);
 
-    GenreDto insert(String genreName);
+    GenreDto create(String genreName);
 
     void deleteById(Long id);
 
     Optional<GenreDto> findById(Long id);
 
-    GenreDto updateGenre(Long id, String name);
-
-    GenreDto upsertGenre(Long id, String name);
+    GenreDto update(Long id, String name);
 
     boolean existsById(Long id);
-
-    GenreDto upsert(Long id, String name);
 }

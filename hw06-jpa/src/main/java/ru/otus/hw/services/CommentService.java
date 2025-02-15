@@ -10,13 +10,11 @@ public interface CommentService {
 
     List<CommentDto> findAllByBookId(Long bookId);
 
-    CommentDto insert(String commentText, Long bookId, String author);
+    CommentDto create(String commentText, Long bookId, String author);
 
-    CommentDto update(Long id, String commentText, Long bookId, String author);
+    CommentDto update(Long id, String commentText, String author);
 
     void deleteById(Long id);
 
     boolean existsById(Long id);
-
-    CommentDto upsert(Long id, String commentText, Long bookId, String author);
 }

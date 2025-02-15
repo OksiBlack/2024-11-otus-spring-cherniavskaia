@@ -34,14 +34,14 @@ public class CommentCommands {
     // cins newComment 2
     @ShellMethod(value = "Insert comment", key = "cins")
     public String insertComment(String content, Long bookId, String author) {
-        var savedComment = commentService.insert(content, bookId, author);
+        var savedComment = commentService.create(content, bookId, author);
         return commentConverter.commentToString(savedComment);
     }
 
     // cupd 4 editedComment
     @ShellMethod(value = "Update comment", key = "cupd")
-    public String updateComment(Long id, String text, Long bookId, String author) {
-        var savedComment = commentService.update(id, text, bookId, author);
+    public String updateComment(Long id, String text, String commentAuthorName) {
+        var savedComment = commentService.update(id, text, commentAuthorName);
         return commentConverter.commentToString(savedComment);
     }
 

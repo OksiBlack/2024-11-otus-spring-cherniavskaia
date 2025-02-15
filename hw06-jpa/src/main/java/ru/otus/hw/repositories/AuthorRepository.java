@@ -15,9 +15,7 @@ public interface AuthorRepository {
 
     List<Author> findAllByIds(Set<Long> ids);
 
-    Author insert(Author author);
-
     void deleteById(Long id);
 
-    Author update(Author author);
+    Author save(Author author);
 }

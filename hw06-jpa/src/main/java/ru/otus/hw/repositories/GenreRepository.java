@@ -13,11 +13,9 @@ public interface GenreRepository {
 
     List<Genre> findAllByIds(Set<Long> ids);
 
-    Genre insert(Genre genre);
-
     void deleteById(Long id);
 
     boolean existsById(Long id);
 
-    Genre update(Genre genre);
+    Genre save(Genre genre);
 }

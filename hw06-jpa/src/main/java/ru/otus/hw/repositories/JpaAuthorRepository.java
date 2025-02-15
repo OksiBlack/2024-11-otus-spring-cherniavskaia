@@ -41,19 +41,18 @@ public class JpaAuthorRepository implements AuthorRepository {
     }
 
     @Override
-    public Author insert(Author author) {
-        em.persist(author);
-        return author;
-    }
-
-    @Override
     public void deleteById(Long id) {
         findById(id)
             .ifPresent(em::remove);
     }
 
     @Override
-    public Author update(Author author) {
-        return em.merge(author);
+    public Author save(Author author) {
+        if (author.getId() == null) {
+            em.persist(author);
+            return author;
+        } else {
+            return em.merge(author);
+        }
     }
 }

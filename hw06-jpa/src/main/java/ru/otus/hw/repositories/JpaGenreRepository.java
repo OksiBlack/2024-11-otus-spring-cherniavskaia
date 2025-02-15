@@ -37,12 +37,6 @@ public class JpaGenreRepository implements GenreRepository {
     }
 
     @Override
-    public Genre insert(Genre genre) {
-        em.persist(genre);
-        return genre;
-    }
-
-    @Override
     public void deleteById(Long id) {
         findById(id)
             .ifPresent(em::remove);
@@ -54,7 +48,12 @@ public class JpaGenreRepository implements GenreRepository {
     }
 
     @Override
-    public Genre update(Genre genre) {
-        return em.merge(genre);
+    public Genre save(Genre genre) {
+        if (genre.getId() == null) {
+            em.persist(genre);
+            return genre;
+        } else {
+            return em.merge(genre);
+        }
     }
 }

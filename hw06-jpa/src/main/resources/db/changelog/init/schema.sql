@@ -30,7 +30,7 @@ create table comments (
     id bigserial,
     book_id bigint references books(id) on delete cascade,
     text varchar(255),
-    comment_date date,
+    created date,
     author varchar(255),
     primary key (id)
 );

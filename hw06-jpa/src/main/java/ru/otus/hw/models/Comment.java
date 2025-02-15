@@ -38,6 +38,7 @@ public class Comment {
     @Column(name = "id")
     private Long id;
 
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", referencedColumnName = "id")
@@ -46,8 +47,8 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "comment_date")
-    private LocalDate commentDate;
+    @Column(name = "created")
+    private LocalDate created;
 
     @Column(name = "author")
     private String author;

@@ -30,7 +30,7 @@ public class GenreCommands {
 
     @ShellMethod(value = "Insert genre", key = "gins")
     public String insertGenre(String name) {
-        var genre = genreService.insert(name);
+        var genre = genreService.create(name);
         return genreConverter.genreToString(genre);
     }
 
@@ -57,13 +57,7 @@ public class GenreCommands {
 
     @ShellMethod(value = "Update genre", key = "gupd")
     public String updateGenre(long id, String name) {
-        GenreDto genre = genreService.updateGenre(id, name);
-        return genreConverter.genreToString(genre);
-    }
-
-    @ShellMethod(value = "Upsert genre", key = "gups")
-    public String upsertGenre(long id, String name) {
-        GenreDto genre = genreService.upsertGenre(id, name);
+        GenreDto genre = genreService.update(id, name);
         return genreConverter.genreToString(genre);
     }
 

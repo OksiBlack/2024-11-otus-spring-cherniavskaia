@@ -37,10 +37,10 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public GenreDto insert(String genreName) {
+    public GenreDto create(String genreName) {
         Genre genre = new Genre();
         genre.setName(genreName);
-        return genreConverter.convert(genreRepository.insert(genre));
+        return genreConverter.convert(genreRepository.save(genre));
     }
 
     @Transactional
@@ -58,37 +58,17 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public GenreDto updateGenre(Long id, String name) {
+    public GenreDto update(Long id, String name) {
         Genre genre = new Genre();
         genre.setName(name);
         genre.setId(id);
 
-        return genreConverter.convert(genreRepository.update(genre));
-    }
-
-    @Transactional
-    @Override
-    public GenreDto upsertGenre(Long id, String name) {
-        if (existsById(id)) {
-            return updateGenre(id, name);
-        } else {
-            return insert(name);
-        }
+        return genreConverter.convert(genreRepository.save(genre));
     }
 
     @Transactional(readOnly = true)
     @Override
     public boolean existsById(Long id) {
         return genreRepository.existsById(id);
-    }
-
-    @Transactional
-    @Override
-    public GenreDto upsert(Long id, String name) {
-        if (existsById(id)) {
-            return updateGenre(id, name);
-        } else {
-            return insert(name);
-        }
     }
 }
