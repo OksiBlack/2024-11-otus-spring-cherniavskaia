@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    #    url: jdbc:h2:mem:maindb;MODE=MSSQLServer;INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE;
+    url: jdbc:h2:file:./_data/jpa-demo;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE;
+    hikari:
+      schema: BOOKSTORE
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yaml
+  shell:
+    interactive:
+      enabled: true
+logging:
+  level:
+    org.hibernate: "debug"
+    liquibase: "debug"
