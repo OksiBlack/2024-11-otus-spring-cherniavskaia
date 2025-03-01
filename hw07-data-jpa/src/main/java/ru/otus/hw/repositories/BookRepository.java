@@ -20,15 +20,15 @@ public interface BookRepository extends ListCrudRepository<Book, Long>, JpaSpeci
     @Override
     Optional<Book> findOne(Specification<Book> spec);
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     List<Book> findAll();
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     List<Book> findAll(Specification<Book> spec);
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     Page<Book> findAll(Specification<Book> spec, Pageable pageable);
 }

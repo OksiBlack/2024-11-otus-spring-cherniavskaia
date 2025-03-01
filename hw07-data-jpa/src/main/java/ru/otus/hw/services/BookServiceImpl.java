@@ -47,13 +47,18 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public BookDto create(String title, Long authorId, Set<Long> genresIds) {
-        return save(null, title, authorId, genresIds);
+
+        return save(new Book(), title, authorId, genresIds);
     }
 
     @Transactional
     @Override
     public BookDto update(Long id, String title, Long authorId, Set<Long> genresIds) {
-        return save(id, title, authorId, genresIds);
+        Book book = bookRepository.findById(id).orElseThrow(() -> {
+            return new EntityNotFoundException("Book with id [%s] not found");
+        });
+
+        return save(book, title, authorId, genresIds);
     }
 
     @Transactional
@@ -62,7 +67,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
-    private BookDto save(Long id, String title, Long authorId, Set<Long> genresIds) {
+    private BookDto save(Book book, String title, Long authorId, Set<Long> genresIds) {
         if (isEmpty(genresIds)) {
             throw new IllegalArgumentException("Genres ids must not be null");
         }
@@ -73,8 +78,10 @@ public class BookServiceImpl implements BookService {
         if (isEmpty(genres) || genresIds.size() != genres.size()) {
             throw new EntityNotFoundException("One or all genres with ids %s not found".formatted(genresIds));
         }
+        book.setGenres(genres);
+        book.setTitle(title);
+        book.setAuthor(author);
 
-        var book = new Book(id, title, author, genres);
         return bookBookDtoConverter.convert(bookRepository.save(book));
     }
 
