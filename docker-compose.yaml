@@ -3,15 +3,15 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: "bookstore"
-      POSTGRES_PORT: "5477"
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "nimda"
-    healthcheck:
-      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
-      interval: 10s
-      timeout: 5s
-      start_period: 10s
-      retries: 5
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_PORT:  "${POSTGRES_PORT}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "${POSTGRES_PORT}:5432"
+    networks:
+      - bookstore-network
+
+
+networks:
+  bookstore-network:
