@@ -215,5 +215,6 @@
         <module>hw05-jdbc-hard</module>
         <module>hw06-jpa</module>
         <module>hw07-data-jpa</module>
+        <module>hw09-web-mvc</module>
     </modules>
 </project>

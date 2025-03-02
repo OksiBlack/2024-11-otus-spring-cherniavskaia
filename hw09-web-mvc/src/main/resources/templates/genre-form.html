@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Updated to Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Updated to FontAwesome 6.7.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <title>Save Genre</title>
+</head>
+
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container">
+
+    <h3>Genre</h3>
+    <hr>
+
+    <p class="h4 mb-4">Save Genre</p>
+
+    <form action="#" th:action="@{/genres/save}"
+          th:object="${genre}" method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}"/>
+
+        <input type="text" th:field="*{name}"
+               class="form-control mb-4 col-4" placeholder="Genre name">
+
+        <input type="text" th:field="*{description}"
+               class="form-control mb-4 col-4" placeholder="Description">
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+    </form>
+    <hr>
+</div>
+</body>
+
+</html>
+
