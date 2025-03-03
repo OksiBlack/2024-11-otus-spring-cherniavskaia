@@ -1,4 +1,4 @@
-package ru.otus.hw.controller.mapper;
+package ru.otus.hw.mapper;
 
 import org.springframework.stereotype.Service;
 import ru.otus.hw.dto.CommentDto;

@@ -18,12 +18,15 @@
 </head>
 
 <div th:fragment="book-search-form">
-    <div class="container" >
+    <div class="container">
         <p class="h5 mb-4">Advanced search for the book by criteria:</p>
         <form action="#" th:action="@{/books/search/advanced}"
               th:object="${bookFilter}" method="POST">
+
             <div class="row">
                 <div class="container gap-3 col">
+<!--                    <input  th:field="*{id}" class="form-control mb-4 col-4" placeholder="Book id" th:value="${bookFilter.id}"/>-->
+
                     <input type="text" th:field="*{title}"
                            class="form-control mb-4 col-4" placeholder="Book name" th:value="${bookFilter.title}">
                 </div>

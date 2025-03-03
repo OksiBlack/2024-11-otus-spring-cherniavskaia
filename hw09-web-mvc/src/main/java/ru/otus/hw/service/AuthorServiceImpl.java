@@ -3,7 +3,7 @@ package ru.otus.hw.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.hw.controller.mapper.AuthorMapper;
+import ru.otus.hw.mapper.AuthorMapper;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.model.Author;
 import ru.otus.hw.repository.AuthorRepository;

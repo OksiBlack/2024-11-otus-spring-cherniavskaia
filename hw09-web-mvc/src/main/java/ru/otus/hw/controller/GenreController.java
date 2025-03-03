@@ -1,4 +1,4 @@
-package ru.otus.hw.controller.v2;
+package ru.otus.hw.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

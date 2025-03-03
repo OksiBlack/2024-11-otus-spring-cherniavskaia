@@ -2,6 +2,8 @@ package ru.otus.hw.service;
 
 import org.springframework.data.jpa.domain.Specification;
 import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.dto.CreateBookRequest;
+import ru.otus.hw.dto.BookSaveRequest;
 import ru.otus.hw.model.Book;
 
 import java.util.List;
@@ -19,4 +21,8 @@ public interface BookService {
     boolean existsById(Long id);
 
     BookDto save(BookDto theBook);
+
+    BookDto create(CreateBookRequest createBookRequest);
+
+    BookDto save(BookSaveRequest updateBookRequest);
 }

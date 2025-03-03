@@ -15,51 +15,34 @@
 <div>
     <hr>
 </div>
-<div th:insert="fragments/book-search-form :: book-search-form"></div>
+<!--<div th:insert="fragments/book-search-form :: book-search-form"></div>-->
 
-<!--<div class="container mb-4">-->
-<!--    <hr>-->
-<!--    <p class="h4 mb-4">Search for the book by criteria:</p>-->
-<!--    <form action="#" th:action="@{/books/search/advanced}"-->
-<!--          th:object="${bookFilter}" method="POST" class="form-control form-control-sm">-->
-<!--        &lt;!&ndash; Add hidden form field to handle update &ndash;&gt;-->
-<!--        &lt;!&ndash;        <input type="hidden" th:field="*{id}" />&ndash;&gt;-->
-<!--        <div class="row">-->
-<!--            <div class="container gap-3 col">-->
-<!--                <input type="text" th:field="*{title}"-->
-<!--                       class="form-control mb-4 col-4" placeholder="Book name" th:value="${bookFilter.title}">-->
-<!--            </div>-->
-<!--            <div class="container gap-3 col">-->
-<!--                <input type="text" th:field="*{authorName}"-->
-<!--                       class="form-control mb-4 col-4" placeholder="Book's Author" th:value="${bookFilter.authorName}">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="container gap-3 col">-->
-<!--                <input type="text" th:field="*{description}"-->
-<!--                       class="form-control mb-4 col-4" placeholder="Book description" th:value="${bookFilter.description}">-->
-<!--            </div>-->
-<!--            <div class="container gap-3 col">-->
-<!--                <input type="text" th:field="*{serialNumber}"-->
-<!--                       class="form-control mb-4 col-4" placeholder="Serial Number" th:value="${bookFilter.serialNumber}">-->
-<!--            </div>-->
-<!--        </div>-->
+<div class="container mb-4">
+    <hr>
+    <p class="h4 mb-4">Search for the book by criteria:</p>
+    <form action="#" th:action="@{/books/search/advanced}"
+          th:object="${bookFilter}" method="POST" class="form-control form-control-sm">
 
-<!--        <div class="row">-->
-<!--            <div class="container gap-3 col">-->
-<!--                <input type="text" th:field="*{isbn}"-->
-<!--                       class="form-control mb-4 col-4" placeholder="ISBN"  th:value="${bookFilter.isbn}">-->
-<!--            </div>-->
-<!--            <div class="container gap-3 col">-->
-<!--                <input type="text" th:field="*{genreName}"-->
-<!--                       class="form-control mb-4 col-4" placeholder="Genre name"  th:value="${bookFilter.genreName}">-->
-<!--            </div>-->
-<!--        </div>-->
+        <input th:field="*{id}" class="form-control mb-4 col-4" placeholder="Book id" th:value="${bookFilter.id}"/>
 
-<!--        <button type="submit" class="btn btn-info col-2">Search</button>-->
-<!--    </form>-->
-<!--    <hr>-->
-<!--</div>-->
+        <input type="text" th:field="*{title}"
+               class="form-control mb-4 col-4" placeholder="Book name" th:value="${bookFilter.title}">
+        <input type="text" th:field="*{authorName}"
+               class="form-control mb-4 col-4" placeholder="Book's Author" th:value="${bookFilter.authorName}">
+        <input type="text" th:field="*{description}"
+               class="form-control mb-4 col-4" placeholder="Book description" th:value="${bookFilter.description}">
+        <input type="text" th:field="*{serialNumber}"
+               class="form-control mb-4 col-4" placeholder="Serial Number" th:value="${bookFilter.serialNumber}">
+
+        <input type="text" th:field="*{isbn}"
+               class="form-control mb-4 col-4" placeholder="ISBN" th:value="${bookFilter.isbn}">
+        <input type="text" th:field="*{genreName}"
+               class="form-control mb-4 col-4" placeholder="Genre name" th:value="${bookFilter.genreName}">
+
+        <button type="submit" class="btn btn-info col-2">Search</button>
+    </form>
+    <hr>
+</div>
 </body>
 </html>
 

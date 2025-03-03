@@ -1,4 +1,4 @@
-package ru.otus.hw.controller.mapper;
+package ru.otus.hw.mapper;
 
 public interface ModelToDtoBidirectionalMapper <M,T> {
      T mapToDto(M model);

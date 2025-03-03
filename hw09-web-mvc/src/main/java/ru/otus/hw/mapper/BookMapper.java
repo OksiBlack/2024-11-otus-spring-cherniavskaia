@@ -1,4 +1,4 @@
-package ru.otus.hw.controller.mapper;
+package ru.otus.hw.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

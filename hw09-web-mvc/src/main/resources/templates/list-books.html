@@ -20,19 +20,7 @@
 <div class="container gap-3">
     <h3 class="my-4">BOOKS LIST</h3>
     <hr>
-    <div class="row">
-        <div class="container gap-3 col">
-            <a th:href="@{/books/showFormForAdd}" class="btn btn-primary btn-sm mb-3">
-                Add Book
-            </a>
-        </div>
-        <div class="container gap-3 col">
-            <a th:href="@{/books/showFormForAdvancedSearch}" class="btn btn-primary btn-sm mb-3">
-                Advanced search
-            </a>
-        </div>
-    </div>
-    <hr>
+
     <div class="container gap-3">
         <p class="h6 mb-4">Simple search by keyword:</p>
     <form th:action="@{/books/search}" method="post">
@@ -53,7 +41,20 @@
     <hr>
 
     <div th:insert="fragments/book-search-form :: book-search-form"></div>
+    <hr>
 
+    <div class="row">
+        <div class="container gap-3 col">
+            <a th:href="@{/books/showFormForAdd}" class="btn btn-primary btn-sm mb-3">
+                Add Book
+            </a>
+        </div>
+        <div class="container gap-3 col">
+            <a th:href="@{/books/showFormForAdvancedSearch}" class="btn btn-primary btn-sm mb-3">
+                Advanced search
+            </a>
+        </div>
+    </div>
     <hr>
     <table class="table table-bordered table-striped align-middle">
         <thead class="thead-dark">
@@ -96,6 +97,12 @@
                     <a th:href="@{/books/showFormForUpdate(bookId=${tempBook.id})}"
                        class="btn btn-info btn-sm mb-1">
                         Edit
+                    </a>
+                </div>
+                <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
+                    <a th:href="@{/books/{bookId}(bookId=${tempBook.id})}"
+                       class="btn btn-primary btn-sm mb-1">
+                        Details
                     </a>
                 </div>
                 <!-- Add "delete" button/link -->

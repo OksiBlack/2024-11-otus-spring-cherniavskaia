@@ -1,17 +1,14 @@
 package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.hw.controller.mapper.CommentMapper;
+import ru.otus.hw.mapper.CommentMapper;
 import ru.otus.hw.dto.CommentDto;
-import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.model.Comment;
 import ru.otus.hw.repository.BookRepository;
 import ru.otus.hw.repository.CommentRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,32 +38,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public CommentDto create(String commentText, Long bookId, String author) {
+    public CommentDto save(CommentDto commentDto) {
 
-        var book = bookRepository.findById(bookId)
-            .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(bookId)));
-
-        Comment comment = Comment.builder()
-            .created(LocalDate.now())
-            .book(book)
-            .author(author)
-            .text(commentText)
-            .build();
-
-        commentRepository.save(comment);
-        return commentMapper.mapToDto(comment);
-    }
-
-    @Transactional
-    @Override
-    public CommentDto update(Long id, String commentText, String commentAuthorName) {
-
-        var comment = commentRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
-
-        comment.setText(commentText);
-        comment.setAuthor(commentAuthorName);
-
+        Comment comment = commentMapper.mapToModel(commentDto);
         commentRepository.save(comment);
         return commentMapper.mapToDto(comment);
     }

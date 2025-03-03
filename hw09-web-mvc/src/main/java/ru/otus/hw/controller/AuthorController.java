@@ -1,4 +1,4 @@
-package ru.otus.hw.controller.v2;
+package ru.otus.hw.controller;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -15,7 +15,6 @@ import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.service.AuthorService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/authors")

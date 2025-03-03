@@ -13,12 +13,14 @@
 <body>
 
 <div th:insert="fragments/header :: header"></div>
+
+
 <div class="container">
     <h3 class="my-4">AUTHOR DETAILS</h3>
 
     <a th:href="@{/authors/list}" class="btn btn-primary" role="button"> Show all authors </a>
 
-    <table class="table table-bordered table-striped align-middle" >
+    <table class="table table-bordered table-striped align-middle">
         <thead class="thead-dark">
         <tr class="align-middle">
             <th>First Name</th>

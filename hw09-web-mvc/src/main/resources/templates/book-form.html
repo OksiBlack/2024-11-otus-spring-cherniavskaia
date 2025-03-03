@@ -16,10 +16,10 @@
     <hr>
     <p class="h4 mb-4">Save Book</p>
     <form action="#" th:action="@{/books/save}"
-          th:object="${books}" method="POST">
+          th:object="${book}" method="POST">
         <!-- Add hidden form field to handle update -->
-        <input type="hidden" th:field="*{id}" />
-Book Name:
+        <input type="hidden" th:field="*{id}"/>
+        Book Name:
         <input type="text" th:field="*{title}"
                class="form-control mb-4 col-4" placeholder="Book name">
 
@@ -29,11 +29,104 @@ Book Name:
         <input type="text" th:field="*{serialNumber}"
                class="form-control mb-4 col-4" placeholder="Serial Number">
 
-        <input type="text" th:field="*{author}"
-               class="form-control mb-4 col-4" placeholder="Book's Author">
 
-<!--        <input type="text" th:field="*{booksPublisher}"-->
-<!--               class="form-control mb-4 col-4" placeholder="Publisher">-->
+        <div class="row my-2">
+            <label for="book-author">Author:</label>
+            <select id="book-author" name="authorId" required class="form-select" th:field="*{authorId}">
+                <option th:each="author : ${authors}"
+                        th:value="${author.id}"
+                        th:text="${author.lastName}"
+                        th:selected="${author.id == book.authorId}"></option>
+            </select>
+        </div>
+
+        <div class="row my-2">
+            <label for="genre-select">Genres:</label>
+            <select id="genre-select" name="genresIds" multiple class="form-select" th:field="*{genreIds}">
+                <option th:each="genre : ${genres}"
+                        th:value="${genre.id}"
+                        th:text="${genre.name}"
+                        th:selected="${#lists.contains(book.genreIds, genre.id)}"></option>
+            </select>
+        </div>
+
+<!--        &lt;!&ndash; Author add select &ndash;&gt;-->
+<!--        <div class="row">-->
+<!--            <label for="book-author-select">Author:</label>-->
+<!--            <select id="book-author-select" name="author.id" th:field="*{author.id}">-->
+<!--                <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.lastName}">Name</option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Genre add table select &ndash;&gt;-->
+<!--        <div class="row">-->
+<!--            <label>Genres:</label>-->
+<!--            <table class="genres">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Name</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="genre, itemStat : ${book.genres}">-->
+<!--                    <td>-->
+<!--                        <label for="book-genre-test-input"></label>-->
+<!--                        <select id="book-genre-test-input" th:field="${book.genres[__${itemStat.index}__].id}">-->
+<!--                            <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <td>-->
+<!--                <label for="genreSelect">Genres:</label>-->
+<!--                <select id="genreSelect" multiple name="genres" th:field="*{genres}">-->
+<!--                    <option th:each="genre : ${genres}" th:value="${genre.id}"-->
+<!--                            th:text="${genre.name}"-->
+<!--                            th:selected="${book.genres.contains(genre)}"></option>-->
+<!--                </select>-->
+<!--            </td>-->
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <td>-->
+<!--                <label for="authorSelect">Authors:</label>-->
+<!--                <select id="authorSelect" name="author" th:field="*{author.id}">-->
+<!--                    <option value="">Select an author</option>-->
+<!--                    <option th:each="author : ${authors}"-->
+<!--                            th:value="${author.id}"-->
+<!--                            th:text="${author.lastName}"-->
+<!--                            th:selected="${book.author.id == author.id}"></option>-->
+<!--                </select>-->
+<!--            </td>-->
+<!--        </div>-->
+
+
+<!--        <div class="row">-->
+<!--            <tr th:each="genre, itemStat : ${genres}">-->
+<!--                <td>-->
+<!--                    <label for="genreSelect">Genres:</label>-->
+<!--                    <select id="genreSelect" multiple name="genreName" th:field="${book.genres[__${itemStat.index}__].id}">-->
+<!--                        <option value="">Select an genre</option>-->
+<!--                        <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"></option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <tr th:each="author, itemStat : ${authors}">-->
+<!--                <td>-->
+<!--                    <label for="authorSelect">Authors:</label>-->
+<!--                    <select id="authorSelect" name="authorLastName" th:field="${book.author.id}">-->
+<!--                        <option value="">Select an author</option>-->
+<!--                        <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.lastName}"></option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </div>-->
 
         <input type="text" th:field="*{description}"
                class="form-control mb-4 col-4" placeholder="Description">

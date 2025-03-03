@@ -1,10 +1,9 @@
 package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.hw.controller.mapper.GenreMapper;
+import ru.otus.hw.mapper.GenreMapper;
 import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.model.Genre;
 import ru.otus.hw.repository.GenreRepository;
