@@ -1,0 +1,26 @@
+.content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.horizontal-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.violet{
+  background-color: darkgray;
+  color: mediumslateblue;
+}
+
+.button {
+  margin-right: 8px;
+}

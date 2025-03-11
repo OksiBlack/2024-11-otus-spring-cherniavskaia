@@ -1,0 +1,5 @@
+@use '@angular/material' as mat;
+
+.spacer {
+  flex: 1 1 auto; /* This allows the spacer to take up available space */
+}

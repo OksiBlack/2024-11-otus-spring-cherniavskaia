@@ -1,0 +1,91 @@
+<button mat-raised-button color="primary" (click)="goToAddBook()">
+    Add book
+</button><br/><br/>
+
+<table mat-table [dataSource]="books" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Book ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let element"> {{ element.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef>Author</th>
+        <td mat-cell *matCellDef="let element">
+            <a mat-button color="accent" (click)="goToAuthorDetails(element)">
+                {{ element.author.firstName }} {{ element.author.lastName }}
+            </a>
+        </td>
+        <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" (click)="goToAuthorDetails(element)">Details</button>
+        </td>
+
+    </ng-container>
+
+    <ng-container matColumnDef="genres">
+        <th mat-header-cell *matHeaderCellDef>Genres</th>
+        <td mat-cell *matCellDef="let element">
+            <ul class="genre-list" style="list-style-type: none; padding: 0;">
+                <li *ngFor="let genre of element.genres">
+                    <a mat-button color="accent" (click)="goToGenreDetails(genre)">
+                       * {{ genre.name }}
+                    </a>
+                </li>
+            </ul>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="serialNumber">
+        <th mat-header-cell *matHeaderCellDef>Serial Number</th>
+        <td mat-cell *matCellDef="let element"> {{ element.serialNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef>ISBN</th>
+        <td mat-cell *matCellDef="let element"> {{ element.isbn }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element"> {{ element.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+            <mat-list>
+                <mat-list-item>
+                    <span matListItemLine>
+                        <button mat-raised-button color="primary" (click)="goToEditBook(element)">Edit</button>
+                    </span>
+
+                </mat-list-item>
+
+                <mat-list-item>
+                    <span matListItemLine>
+                        <button mat-raised-button color="accent" (click)="goToBookDetails(element)">Details</button>
+                    </span>
+
+                </mat-list-item>
+
+                <mat-list-item>
+                    <span matListItemLine>
+                        <button mat-raised-button color="warn" (click)="deleteBook(element)">Delete</button>
+                    </span>
+                </mat-list-item>
+            </mat-list>
+
+
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+</table>

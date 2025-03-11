@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+.card-title {
+  margin-bottom: 20px;
+  color: whitesmoke; /* Change to your desired color */
+  /* You can also use other CSS styles here, such as font-weight, font-size, etc. */
+}
+
+.card-image {
+  width: auto; /* Allows the image to maintain its natural width */
+  height: auto; /* Allows the image to maintain its natural height */
+  max-width: 100%; /* Ensures image does not exceed its container width */
+  max-height: 100%; /* Set a maximum height to maintain a consistent card size */
+  display: block; /* Ensures proper spacing */
+  margin: 0 auto; /* Center the image if it's smaller than the container */
+}
+
+mat-card {
+  margin: 16px; /* Adds spacing around each card */
+}
+
+.center-align {
+  display: flex; /* Enables flexbox for alignment */
+  justify-content: center; /* Center aligns the button horizontally */
+  padding: 16px 0; /* Optional: Adds vertical spacing */
+}
