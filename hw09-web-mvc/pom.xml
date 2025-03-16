@@ -12,7 +12,6 @@
     <artifactId>hw09-web-mvc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
-        <flyway.version>11.1.0</flyway.version>
         <reflections.version>0.10.2</reflections.version>
         <liquibase-core.version>4.31.0</liquibase-core.version>
         <postgresql.version>42.7.5</postgresql.version>
