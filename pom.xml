@@ -216,5 +216,6 @@
         <module>hw06-jpa</module>
         <module>hw07-data-jpa</module>
         <module>hw09-web-mvc</module>
+        <module>hw10-rest-angular-spa/backend</module>
     </modules>
 </project>
