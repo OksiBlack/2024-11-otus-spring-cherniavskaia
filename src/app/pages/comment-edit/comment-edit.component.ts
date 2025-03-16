@@ -81,11 +81,9 @@ export class CommentEditComponent implements OnInit {
 
     public goToBookDetails(comment: CommentData) {
         this.router.navigate(['books', comment.bookId])
-
     }
 
     public goToBookComments(comment: CommentData) {
         this.router.navigate(['books', comment.bookId, 'comments'])
-
     }
 }

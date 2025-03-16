@@ -16,6 +16,6 @@ export const appConfig: ApplicationConfig = {
             withInterceptors([loggerInterceptor, loggingResponseInterceptor])
         ),
         provideAnimationsAsync(),
-        provideNativeDateAdapter()
+        provideNativeDateAdapter(),
     ]
 };

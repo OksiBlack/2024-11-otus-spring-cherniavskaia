@@ -1,51 +1,30 @@
 <div class="content">
-  <mat-form-field hidden="hidden">
-    <mat-label>Comment ID</mat-label>
-    <input matInput type="text" readonly="true" [(ngModel)]="comment.id">
-  </mat-form-field>
+    <mat-form-field hidden="hidden">
+        <mat-label>Comment ID</mat-label>
+        <input matInput type="text" readonly="true" [(ngModel)]="comment.id">
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Text</mat-label>
-    <input matInput type="text" [(ngModel)]="comment.text">
-  </mat-form-field>
+    <mat-form-field>
+        <mat-label>Text</mat-label>
+        <input matInput type="text" [(ngModel)]="comment.text">
+    </mat-form-field>
 
     <mat-form-field>
         <mat-label>Commented by:</mat-label>
         <input matInput type="text" [(ngModel)]="comment.author">
     </mat-form-field>
 
-<!--    <mat-form-field>-->
-<!--        <mat-label>Created</mat-label>-->
-<!--        <input matInput type="text" [(ngModel)]="comment.created">-->
-<!--    </mat-form-field>-->
-
     <mat-form-field appearance="fill">
         <mat-label>Choose a date</mat-label>
         <input matInput [matDatepicker]="picker" [(ngModel)]="comment.created" placeholder="MM/DD/YYYY">
         <mat-hint>Format: MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-datepicker #picker/>
     </mat-form-field>
 
-<!--    <mat-form-field>-->
-<!--        <mat-label>Choose a date</mat-label>-->
-<!--        <input matInput [matDatepicker]="picker" [(ngModel)]="comment.created">-->
-<!--        <mat-hint>MM/DD/YYYY</mat-hint>-->
-<!--        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--        <mat-datepicker #picker></mat-datepicker>-->
-<!--    </mat-form-field>-->
-
-<!--  <mat-form-field>-->
-<!--    <mat-label>Book</mat-label>-->
-<!--    <mat-select [(ngModel)]="comment.bookId" class="violet">-->
-<!--      <mat-option class="violet" *ngFor="let book of books"-->
-<!--                  [value]="book.id">{{book.title}}</mat-option>-->
-<!--    </mat-select>-->
-<!--  </mat-form-field>-->
 </div>
 
 <div class="horizontal-content">
-  <button class="button" mat-raised-button color="primary" (click)="saveComment()">Save</button>
-  <button class="button" mat-raised-button color="accent" (click)="goToBookDetails(comment)">Show book details</button>
-<!--  <button class="button" mat-raised-button color="accent" (click)="goToBookList()">Show book list</button>-->
+    <button class="button" mat-raised-button color="primary" (click)="saveComment()">Save</button>
+    <button class="button" mat-raised-button color="accent" (click)="goToBookComments(comment)">Back to book comments</button>
 </div>
