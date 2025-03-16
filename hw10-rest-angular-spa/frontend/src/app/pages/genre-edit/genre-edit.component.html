@@ -1,0 +1,22 @@
+
+<div class="content">
+    <mat-form-field hidden="hidden">
+        <mat-label>Genre ID</mat-label>
+        <input matInput type="text" readonly="true" [(ngModel)]="genre.id">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="genre.name">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="genre.description" rows="10"></textarea>
+    </mat-form-field>
+</div>
+
+<div class="horizontal-content">
+    <button class="button" mat-raised-button color="primary" (click)="saveGenre()">Save</button>
+    <button class="button" mat-raised-button (click)="goToGenreList()">Back to genre list</button>
+</div>

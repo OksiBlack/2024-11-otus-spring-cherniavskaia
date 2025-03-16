@@ -1,0 +1,42 @@
+.content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  color: whitesmoke;
+  margin-bottom: 30px;
+}
+
+.horizontal-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+h1 {
+  color: mediumslateblue;
+  margin-bottom: 20px
+}
+
+mat-card-title {
+  margin-bottom: 20px
+}
+
+mat-toolbar {
+  margin-right: 30px;
+  color: greenyellow;
+}
+
+.bookstore-toolbar {
+  background-color: #404040; // or any color you prefer for the toolbar
+}
+
+.action-button {
+  //background-color: dodgerblue;
+  color: whitesmoke;
+  margin-right: 18px; // Adjust the value as per your requirement.
+}
