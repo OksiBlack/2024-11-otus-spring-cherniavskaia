@@ -1,0 +1,65 @@
+<button mat-raised-button (click)="goToAddComment(book)" color="primary">
+    Add comment
+</button><br/><br/>
+<h3 class="content">{{ book.title }}</h3>
+<h5 class="content">Comments</h5>
+<table mat-table [dataSource]="comments" class="mat-elevation-z8">
+
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Comment ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="text">
+        <th mat-header-cell *matHeaderCellDef>Text</th>
+        <td mat-cell *matCellDef="let element"> {{ element.text }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef>Author</th>
+        <td mat-cell *matCellDef="let element"> {{ element.author }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef>Created</th>
+        <td mat-cell *matCellDef="let element"> {{ element.created }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+            <mat-list>
+                <mat-list-item>
+                    <span matListItemLine>
+                        <button mat-raised-button color="primary" (click)="goToEditComment(element)">Edit</button>
+                    </span>
+
+                </mat-list-item>
+
+                <!--                <mat-list-item>-->
+                <!--                    <span matListItemLine>-->
+                <!--                        <button mat-raised-button color="accent" (click)="deleteComment(element)">Details</button>-->
+                <!--                    </span>-->
+
+                <!--                </mat-list-item>-->
+
+            </mat-list>
+
+
+        </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+<br>
+
+<mat-toolbar class="bookstore-toolbar">
+    <button class="button action-button" color="primary" mat-raised-button (click)="goToBookDetails(book)">Go to book details</button>
+    <button class="button action-button" color="primary" mat-raised-button (click)="goToBookList()">Back to book list</button>
+</mat-toolbar>

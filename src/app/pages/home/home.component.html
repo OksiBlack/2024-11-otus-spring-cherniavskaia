@@ -1,0 +1,19 @@
+<div class="container">
+    <h1>WELCOME TO BOOK LIBRARY AND STORE</h1>
+
+    <mat-grid-list cols="3">
+        <mat-grid-tile *ngFor="let card of cards">
+            <mat-card appearance="outlined">
+<!--                <mat-card-header class="center-align">-->
+<!--                    <mat-card-title class="card-title center-align">{{ card.title }}</mat-card-title>-->
+<!--                </mat-card-header>-->
+                <mat-card-content>
+                    <img mat-card-image [src]="card.image" alt="{{ card.title }}" class="card-image">
+                </mat-card-content>
+                <mat-card-actions class="center-align">
+                    <button mat-raised-button color="accent" [routerLink]="card.link">{{ card.buttonText }}</button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
