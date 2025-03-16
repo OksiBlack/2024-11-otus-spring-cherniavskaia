@@ -13,7 +13,6 @@
     <artifactId>hw10-rest-angular-spa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
-        <flyway.version>11.1.0</flyway.version>
         <reflections.version>0.10.2</reflections.version>
         <liquibase-core.version>4.31.0</liquibase-core.version>
         <postgresql.version>42.7.5</postgresql.version>
@@ -25,6 +24,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
         <dependency>
