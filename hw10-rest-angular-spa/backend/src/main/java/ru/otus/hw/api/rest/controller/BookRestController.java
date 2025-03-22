@@ -24,7 +24,6 @@ import ru.otus.hw.dto.request.SaveBookRequest;
 import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.service.BookService;
 import ru.otus.hw.service.CommentService;
-import ru.otus.hw.service.spec.builder.SpecBuilder;
 
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class BookRestController {
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
     )
     public List<BookDto> findBookByFilter(@RequestBody BookSearchFilter bookSearchFilter) {
-        return bookService.findAll(SpecBuilder.Book.buildByFilter(bookSearchFilter));
+        return bookService.findAll(bookSearchFilter);
     }
 
     @Operation(summary = "List all comments for book id.", description = "List all comments for book id.")

@@ -155,7 +155,7 @@ class BookRestControllerTest {
         // Set any filter criteria you want to test
         List<BookDto> filteredBooks = Collections.singletonList(BookDto.builder().title("Filtered Book").build());
 
-        when(bookService.findAll(any())).thenReturn(filteredBooks);
+        when(bookService.findAll(any(BookSearchFilter.class))).thenReturn(filteredBooks);
 
         mockMvc.perform(post("/api/books/search")
                 .contentType(MediaType.APPLICATION_JSON)
