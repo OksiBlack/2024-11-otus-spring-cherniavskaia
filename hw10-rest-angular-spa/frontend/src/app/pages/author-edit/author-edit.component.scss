@@ -1,0 +1,23 @@
+.content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  //width: 600px
+
+}
+
+.horizontal-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+
+.button {
+  margin-right: 8px;
+}

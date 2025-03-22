@@ -1,0 +1,57 @@
+<button mat-raised-button color="primary" (click)="goToBookList()" class="action-button">
+    Show all books
+</button>
+<br/>
+<br/>
+<mat-card class="content" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title> {{ book.title }}</mat-card-title>
+            <mat-card-subtitle>
+            </mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-header>
+
+    <mat-card-content class="horizontal-content">
+        {{ book.description }}
+    </mat-card-content>
+
+    <mat-card-content class="horizontal-content">Isbn: {{ book.isbn }}</mat-card-content>
+    <mat-card-content class="horizontal-content">Serial number: {{ book.serialNumber }}</mat-card-content>
+
+    <mat-card-content class="content">
+        <ng-container class="horizontal-content">
+            <ul class="genre-list" style="list-style-type: none; padding: 0;">
+                <li *ngFor="let genre of book.genres">
+                    <a mat-button color="accent" (click)="goToGenre(genre)">
+                        * {{ genre.name }}
+                    </a>
+                </li>
+            </ul>
+        </ng-container>
+
+    </mat-card-content>
+
+    <mat-card-content class="content">
+        <span>Author: </span>
+        <ng-container>
+            <a mat-button color="accent" (click)="goToAuthorDetails(book.author)">
+                {{ book.author?.firstName }} {{ book.author?.lastName }}
+            </a>
+        </ng-container>
+    </mat-card-content>
+
+</mat-card>
+
+
+<mat-toolbar class="bookstore-toolbar">
+    <button mat-raised-button color="primary" (click)="goToEditBook(book)" class="action-button">
+        Edit
+    </button>
+    <button mat-raised-button color="primary" (click)="deleteBook(book)" class="action-button">
+        Delete
+    </button>
+
+    <button mat-raised-button color="accent" (click)="showCommentsForBook(book)">Show comments</button>
+
+</mat-toolbar>

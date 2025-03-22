@@ -1,0 +1,28 @@
+.content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  //flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%; /* Set to full width */
+  max-width: 900px; /* Or any max width you desire */
+  //margin: auto; /* Center the form if necessary */
+}
+
+.horizontal-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  //flex-wrap: nowrap;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.button {
+  margin-right: 8px;
+}
+
+.mat-form-field {
+  width: 100%; /* Ensure each form field takes the full width of the container */
+}

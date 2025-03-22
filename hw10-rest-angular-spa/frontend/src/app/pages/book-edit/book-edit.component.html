@@ -1,0 +1,49 @@
+<div class="content">
+    <h1>Book</h1>
+
+    <mat-form-field hidden="hidden">
+    <mat-label>Book ID</mat-label>
+    <input matInput type="text" readonly="true" [(ngModel)]="book.id">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput type="text" [(ngModel)]="book.title">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Author</mat-label>
+    <mat-select [(ngModel)]="book.author">
+      <mat-option *ngFor="let author of authors"
+                  [value]="author">{{author.firstName}} {{author.lastName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Genres</mat-label>
+    <mat-select [(ngModel)]="book.genres" multiple>
+      <mat-option *ngFor="let genre of genres" [value]="genre">{{genre.name}}</mat-option>
+<!--      <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.name}}</mat-option>-->
+    </mat-select>
+  </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>ISBN</mat-label>
+        <input matInput type="text" [(ngModel)]="book.isbn">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Serial Number</mat-label>
+        <input matInput type="text" [(ngModel)]="book.serialNumber">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="book.description" size="500"></textarea>
+    </mat-form-field>
+</div>
+
+<div class="horizontal-content">
+  <button class="button" mat-raised-button color="primary" (click)="saveBook()">Save</button>
+  <button class="button" mat-raised-button (click)="goToBookList()">Back to book list</button>
+</div>

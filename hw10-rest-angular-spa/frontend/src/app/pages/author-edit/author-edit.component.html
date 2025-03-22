@@ -1,0 +1,33 @@
+
+<div class="content">
+    <mat-form-field hidden="hidden">
+        <mat-label>Author ID</mat-label>
+        <input matInput type="text" readonly="true" [(ngModel)]="author.id">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" [(ngModel)]="author.firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Middle Name</mat-label>
+        <input matInput type="text" [(ngModel)]="author.middleName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" [(ngModel)]="author.lastName">
+    </mat-form-field>
+
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="author.description" rows="10"></textarea>
+    </mat-form-field>
+</div>
+
+<div class="horizontal-content">
+    <button class="button" mat-raised-button color="primary" (click)="saveAuthor(author)">Save</button>
+    <button class="button" mat-raised-button (click)="goToAuthorList()">Back to author list</button>
+</div>

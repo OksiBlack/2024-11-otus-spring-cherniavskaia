@@ -1,0 +1,29 @@
+.content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.horizontal-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.button {
+  margin-right: 8px;
+}
+
+.bookstore-toolbar {
+  background-color: #404040; // or any color you prefer for the toolbar
+}
+
+.action-button {
+  color: whitesmoke;
+  margin-right: 18px; // Adjust the value as per your requirement.
+}

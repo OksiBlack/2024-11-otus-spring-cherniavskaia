@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+.horizontal-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+
+:root {
+  @include mat.button-overrides((
+          filled-container-color: orange,
+          filled-label-text-color: red,
+  ));
+}

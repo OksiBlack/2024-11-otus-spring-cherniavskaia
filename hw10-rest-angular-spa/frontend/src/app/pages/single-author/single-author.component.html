@@ -1,0 +1,31 @@
+<button mat-raised-button color="primary" (click)="goToAuthorList()" class="action-button">
+    Show all authors
+</button>
+<br/>
+<br/>
+<mat-card class="content" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title> {{ author.firstName }} {{ author.middleName }} {{ author.lastName }}
+            </mat-card-title>
+            <mat-card-subtitle/>
+        </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content></mat-card-content>
+
+    <mat-card-content>
+        {{ author.description }}
+    </mat-card-content>
+    <mat-card-content class="horizontal-content">
+
+    </mat-card-content>
+</mat-card>
+
+<mat-toolbar class="bookstore-toolbar">
+    <button mat-raised-button color="primary" (click)="goToEditAuthor(author)" class="action-button">
+        Edit
+    </button>
+    <button mat-raised-button color="primary" (click)="deleteAuthor(author)" class="action-button">
+        Delete
+    </button>
+</mat-toolbar>
