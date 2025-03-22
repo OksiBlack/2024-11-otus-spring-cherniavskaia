@@ -28,7 +28,6 @@ import ru.otus.hw.service.AuthorService;
 import ru.otus.hw.service.BookService;
 import ru.otus.hw.service.CommentService;
 import ru.otus.hw.service.GenreService;
-import ru.otus.hw.service.spec.builder.SpecBuilder;
 
 import java.util.List;
 
@@ -125,7 +124,7 @@ public class BookController {
     )
     public String findBookByFilter(Model model, BookSearchFilter bookSearchFilter) {
 
-        List<BookDto> filtered = bookService.findAll(SpecBuilder.Book.buildByFilter(bookSearchFilter));
+        List<BookDto> filtered = bookService.findAll(bookSearchFilter);
         model.addAttribute("books", filtered);
         model.addAttribute("bookFilter", bookSearchFilter);
 
@@ -142,7 +141,7 @@ public class BookController {
     @PostMapping("/search")
     public String findBookByKeyword(Model model, @Param("keyword") String keyword) {
 
-        List<BookDto> filtered = bookService.findAll(SpecBuilder.Book.buildByKeyword(keyword));
+        List<BookDto> filtered = bookService.findAll(keyword);
         model.addAttribute("books", filtered);
         model.addAttribute("filterKeyword", keyword);
         return "list-books";

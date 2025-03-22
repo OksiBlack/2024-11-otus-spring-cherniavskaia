@@ -19,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.proxy.HibernateProxy;
@@ -66,8 +65,9 @@ public class Book {
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
 
-    @Fetch(value = FetchMode.SELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.SUBSELECT)
+//    @Fetch(value = FetchMode.SELECT)
+//    @BatchSize(size = 1200)
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

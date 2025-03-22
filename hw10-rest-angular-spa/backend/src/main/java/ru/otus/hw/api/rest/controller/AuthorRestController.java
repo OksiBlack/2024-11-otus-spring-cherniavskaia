@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.dto.request.SaveAuthorRequest;
-import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.service.AuthorService;
 
 import java.util.List;
@@ -42,9 +41,7 @@ public class AuthorRestController {
     @Operation(summary = "Get author by id.", description = "Get author by id.")
     @GetMapping("/{authorId}")
     public AuthorDto getById(@PathVariable Long authorId) {
-        return authorService.findById(authorId).orElseThrow(
-            () -> new EntityNotFoundException("Author not found: [%s] ".formatted(authorId))
-        );
+        return authorService.findById(authorId);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)

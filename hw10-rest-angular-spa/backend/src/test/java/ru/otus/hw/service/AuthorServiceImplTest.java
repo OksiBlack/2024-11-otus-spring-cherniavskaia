@@ -10,16 +10,17 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.dto.AuthorDto;
+import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.mapper.AuthorMapper;
 import ru.otus.hw.model.Author;
 import ru.otus.hw.repository.AuthorRepository;
 import ru.otus.hw.testObjects.PredefinedAuthors;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Service for working with authors")
 @DataJpaTest
@@ -83,11 +84,10 @@ class AuthorServiceImplTest {
     void testFindById() {
         // Given
         // When
-        Optional<AuthorDto> found = authorService.findById(PredefinedAuthors.TOLKIEN_AUTHOR.getId());
+        AuthorDto found = authorService.findById(PredefinedAuthors.TOLKIEN_AUTHOR.getId());
 
         // Then
-        assertThat(found).isPresent();
-        assertThat(found.get())
+        assertThat(found)
             .usingRecursiveComparison().isEqualTo(TOLKIEN);
     }
 
@@ -102,20 +102,19 @@ class AuthorServiceImplTest {
             .build());
 
         // When
-        Optional<AuthorDto> found = authorService.findById(savedAuthor.getId());
+        AuthorDto found = authorService.findById(savedAuthor.getId());
 
         // Then
-        assertThat(found).isPresent();
-        assertThat(found.get()).extracting("firstName", "middleName", "lastName").containsExactly("George", "R.", "Martin");
+        assertThat(found).extracting("firstName", "middleName", "lastName").containsExactly("George", "R.", "Martin");
     }
 
     @Test
     void testFindByIdNotFound() {
         // When
-        Optional<AuthorDto> found = authorService.findById(999L); // id that does not exist
-
         // Then
-        assertThat(found).isNotPresent();
+        assertThatThrownBy(() -> authorService.findById(999L))
+            .isInstanceOf(EntityNotFoundException.class);
+
     }
 
     @Test

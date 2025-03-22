@@ -1,9 +1,8 @@
 package ru.otus.hw.service;
 
-import org.springframework.data.jpa.domain.Specification;
 import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.dto.BookSearchFilter;
 import ru.otus.hw.dto.request.SaveBookRequest;
-import ru.otus.hw.model.Book;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +12,9 @@ public interface BookService {
 
     List<BookDto> findAll();
 
-    List<BookDto>  findAll(Specification<Book> spec);
+    List<BookDto> findAll(String keyword);
+
+    List<BookDto> findAll(BookSearchFilter bookSearchFilter);
 
     void deleteById(Long id);
 

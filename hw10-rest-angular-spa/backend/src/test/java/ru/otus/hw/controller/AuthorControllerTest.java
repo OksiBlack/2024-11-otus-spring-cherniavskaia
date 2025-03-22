@@ -78,7 +78,7 @@ class AuthorControllerTest {
             .description("A prolific author.")
             .build();
 
-        when(authorService.findById(authorId)).thenReturn(Optional.of(author));
+        when(authorService.findById(authorId)).thenReturn(author);
 
         // When & Then
         mockMvc.perform(get("/authors/{authorId}", authorId))
@@ -108,7 +108,7 @@ class AuthorControllerTest {
             .description("A prolific author.")
             .build();
 
-        when(authorService.findById(authorId)).thenReturn(Optional.of(author));
+        when(authorService.findById(authorId)).thenReturn(author);
 
         // When & Then
         mockMvc.perform(get("/authors/showFormForUpdate").param("authorId", String.valueOf(authorId)))

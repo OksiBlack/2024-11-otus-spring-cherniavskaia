@@ -2,10 +2,10 @@ package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.dto.BookSearchFilter;
 import ru.otus.hw.dto.request.SaveBookRequest;
 import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.mapper.BookMapper;
@@ -13,6 +13,7 @@ import ru.otus.hw.model.Book;
 import ru.otus.hw.repository.AuthorRepository;
 import ru.otus.hw.repository.BookRepository;
 import ru.otus.hw.repository.GenreRepository;
+import ru.otus.hw.service.spec.builder.SpecBuilder;
 
 import java.util.HashSet;
 import java.util.List;
@@ -46,11 +47,18 @@ public class BookServiceImpl implements BookService {
             .toList();
     }
 
+    @Override
+    public List<BookDto> findAll(String keyword) {
+
+        return bookRepository.findAll(SpecBuilder.Book.buildByKeyword(keyword)).stream()
+            .map(bookMapper::mapToDto).toList();
+    }
+
     @Transactional
     @Override
-    public List<BookDto> findAll(Specification<Book> spec) {
+    public List<BookDto> findAll(BookSearchFilter bookSearchFilter) {
 
-        return bookRepository.findAll(spec).stream()
+        return bookRepository.findAll(SpecBuilder.Book.buildByFilter(bookSearchFilter)).stream()
             .map(bookMapper::mapToDto).toList();
     }
 

@@ -12,23 +12,23 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository extends ListCrudRepository<Book, Long>, JpaSpecificationExecutor<Book> {
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     Optional<Book> findById(Long id);
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     Optional<Book> findOne(Specification<Book> spec);
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     List<Book> findAll();
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     List<Book> findAll(Specification<Book> spec);
 
-    @EntityGraph(value = EntityGraphNames.FULL_BOOK_ENTITY_GRAPH)
+    @EntityGraph(value = EntityGraphNames.BOOK_AUTHOR_ENTITY_GRAPH)
     @Override
     Page<Book> findAll(Specification<Book> spec, Pageable pageable);
 }

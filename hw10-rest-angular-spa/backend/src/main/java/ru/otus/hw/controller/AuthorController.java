@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.hw.dto.AuthorDto;
-import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.service.AuthorService;
 
 import java.util.List;
@@ -41,9 +40,7 @@ public class AuthorController {
     @GetMapping("/{authorId}")
     public String getById(@PathVariable Long authorId, Model theModel) {
         // get author from db
-        AuthorDto author = authorService.findById(authorId).orElseThrow(
-            () -> new EntityNotFoundException("Author not found: [%s] ".formatted(authorId))
-        );
+        AuthorDto author = authorService.findById(authorId);
         // add to the spring model
         theModel.addAttribute("author", author);
         return "single-author";
@@ -60,7 +57,7 @@ public class AuthorController {
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("authorId") Long theId, Model theModel) {
         //get the author from the service
-        AuthorDto theAuthor = authorService.findById(theId).orElseThrow();
+        AuthorDto theAuthor = authorService.findById(theId);
         //set author as a model attribute to pre-populate the form
         theModel.addAttribute("author", theAuthor);
         return "author-form";
