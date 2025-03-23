@@ -1,0 +1,9 @@
+spring:
+  datasource:
+#    url: jdbc:h2:file:./_data/hw12;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS BOOKSTORE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS bookstore;CASE_INSENSITIVE_IDENTIFIERS=TRUE;
+    hikari:
+      schema: BOOKSTORE
+  liquibase:
+    enabled: true
+    changeLog: classpath:db/changelog/db.changelog-master-test.yml

@@ -217,5 +217,6 @@
         <module>hw07-data-jpa</module>
         <module>hw09-web-mvc</module>
         <module>hw10-rest-angular-spa/backend</module>
+        <module>hw12-spring-security</module>
     </modules>
 </project>
