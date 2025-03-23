@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/sql/init/bookstore-schema.sql
+  - include:
+      file: db/changelog/sql/init/users-and-authorities-schema.sql
+  - include:
+      file: db/changelog/test-data/sql/2025-01-25__01__author-add-data.sql
+  - include:
+      file: db/changelog/test-data/sql/2025-01-25__03__books-add-data.sql
+  - include:
+      file: db/changelog/test-data/sql/2025-01-25__02__genres-add-data.sql
+  - include:
+      file: db/changelog/test-data/sql/2025-01-25__04__books_genres-add-data.sql
+  - include:
+      file: db/changelog/test-data/sql/2025-01-25__05__comments-add-data.sql
+  - include:
+      file: db/changelog/test-data/sql/2025-03-25__05__add-users.sql
