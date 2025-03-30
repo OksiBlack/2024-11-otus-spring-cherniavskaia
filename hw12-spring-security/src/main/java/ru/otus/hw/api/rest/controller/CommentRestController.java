@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import java.util.List;
 public class CommentRestController {
     private final CommentService commentService;
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_books:read')")
     @Operation(summary = "Get comment by id.", description = "Get comment by id.")
     @GetMapping(value = "/{id}",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
@@ -39,6 +41,7 @@ public class CommentRestController {
         );
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_books:write')")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(summary = "Create comment.", description = "Create comment.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -48,6 +51,7 @@ public class CommentRestController {
         return commentService.save(commentDto);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_books:write')")
     @Operation(summary = "Update comment by id.", description = "Update comment by id.")
     @PutMapping(value = "/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
@@ -58,6 +62,7 @@ public class CommentRestController {
         return commentService.save(commentDto);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN') or hasAuthority('SCOPE_books:write')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete comment by id.", description = "Delete comment by id.")
     @DeleteMapping("/{commentId}")
@@ -65,6 +70,7 @@ public class CommentRestController {
         commentService.deleteById(theId);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_books:read')")
     @Operation(summary = "List all comments for book id.", description = "List all comments for book id.")
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public List<CommentDto> listCommentsForBook(@RequestParam Long bookId) {

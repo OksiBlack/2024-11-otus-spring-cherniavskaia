@@ -7,22 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.service.AuthorService;
 import ru.otus.hw.service.AuthorServiceImpl;
+import ru.otus.hw.testObjects.TestData;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+@WithMockUser(roles = {TestData.RoleNames.READER})
 @Import({AuthorServiceImpl.class})
 @WebMvcTest(AuthorRestController.class)
 class AuthorRestControllerTest {
@@ -103,15 +109,16 @@ class AuthorRestControllerTest {
 
         // When & Then
         mockMvc.perform(post("/api/authors")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
-                        {
-                            "firstName": "John",
-                            "lastName": "Doe",
-                            "middleName": "M.",
-                            "description": "Some description"
-                        }
-                        """))
+                    {
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "middleName": "M.",
+                        "description": "Some description"
+                    }
+                    """))
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("John"));
@@ -144,14 +151,15 @@ class AuthorRestControllerTest {
         // When & Then
         mockMvc.perform(put("/api/authors/{authorId}", authorId)
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf())
                 .content("""
-                        {
-                            "firstName": "Updated",
-                            "lastName": "Doe",
-                            "middleName": "M.",
-                            "description": "Updated description"
-                        }
-                        """))
+                    {
+                        "firstName": "Updated",
+                        "lastName": "Doe",
+                        "middleName": "M.",
+                        "description": "Updated description"
+                    }
+                    """))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Updated"));
@@ -165,7 +173,9 @@ class AuthorRestControllerTest {
         Long authorId = 1L;
 
         // When & Then
-        mockMvc.perform(delete("/api/authors/{authorId}", authorId))
+        mockMvc.perform(delete("/api/authors/{authorId}", authorId)
+                .with(csrf())
+            )
             .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         verify(authorService, times(1)).deleteById(authorId);

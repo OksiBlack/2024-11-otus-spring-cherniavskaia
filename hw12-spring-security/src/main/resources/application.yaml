@@ -25,22 +25,25 @@ spring:
   shell:
     interactive:
       enabled: false
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          keycloak:
-#            client-id: bookstore-client
-#            client-secret: bookstore-client-secret
-#            authorization-grant-type: authorization_code
-#            redirect-uri: "http://localhost:9090/login/oauth2/code/keycloak"
-#            scope: openid,profile,email
-#        provider:
-#          keycloak:
-#            issuer-uri: ${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore
-#            authorization-uri: ${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore/protocol/openid-connect/auth
-#            token-uri: ${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore/protocol/openid-connect/token
-
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: bookstore-client
+            client-secret: bookstore-client-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "${KEYCLOAK_BASE_URL:http://localhost:9090}/login/oauth2/code/keycloak"
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: "${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore"
+            authorization-uri: "${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore/protocol/openid-connect/auth"
+            token-uri: "${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore/protocol/openid-connect/token"
+      resourceserver:
+        jwt:
+          issuer-uri: "${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore"
+          jwk-set-uri: "${KEYCLOAK_BASE_URL:http://localhost:58080}/realms/bookstore/protocol/openid-connect/certs"
 logging:
   level:
     root: "debug"
@@ -50,7 +53,7 @@ logging:
 springdoc:
   show-oauth2-endpoints: true
   show-actuator: true
-
-
+  show-login-endpoint: true
   swagger-ui:
+    disable-swagger-default-url: true
     try-it-out-enabled: true

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.dto.BookDto;
@@ -14,6 +15,7 @@ import ru.otus.hw.dto.CommentDto;
 import ru.otus.hw.dto.request.SaveBookRequest;
 import ru.otus.hw.service.BookService;
 import ru.otus.hw.service.CommentService;
+import ru.otus.hw.testObjects.TestData;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,6 +25,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -31,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WithMockUser(roles = {TestData.RoleNames.READER})
 @WebMvcTest(BookRestController.class)
 class BookRestControllerTest {
 
@@ -87,6 +91,7 @@ class BookRestControllerTest {
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON));
     }
 
+    @WithMockUser(roles = {TestData.RoleNames.EDITOR})
     @Test
     void testCreateBook() throws Exception {
         SaveBookRequest saveBookRequest = SaveBookRequest.builder()
@@ -106,6 +111,7 @@ class BookRestControllerTest {
         when(bookService.save(any(SaveBookRequest.class))).thenReturn(newBook);
 
         mockMvc.perform(post("/api/books")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(saveBookRequest)))
             .andExpect(status().isCreated())
@@ -114,6 +120,7 @@ class BookRestControllerTest {
             .andExpect(jsonPath("$.title").value("New Book Title"));
     }
 
+    @WithMockUser(roles = {TestData.RoleNames.EDITOR})
     @Test
     void testUpdateBook() throws Exception {
         Long bookId = 1L;
@@ -131,6 +138,7 @@ class BookRestControllerTest {
         when(bookService.save(any(SaveBookRequest.class))).thenReturn(updatedBook);
 
         mockMvc.perform(put("/api/books/{bookId}", bookId)
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(saveBookRequest)))
             .andExpect(status().isOk())
@@ -138,12 +146,15 @@ class BookRestControllerTest {
             .andExpect(jsonPath("$.title").value("Updated Book Title"));
     }
 
+    @WithMockUser(roles = {TestData.RoleNames.ADMIN})
     @Test
     void testDeleteBook() throws Exception {
         Long bookId = 1L;
         doNothing().when(bookService).deleteById(bookId);
 
-        mockMvc.perform(delete("/api/books/{bookId}", bookId))
+        mockMvc.perform(delete("/api/books/{bookId}", bookId)
+                .with(csrf())
+            )
             .andExpect(status().isNoContent());
 
         // Verify that the deleteById method is called
@@ -158,6 +169,7 @@ class BookRestControllerTest {
         when(bookService.findAll(any(BookSearchFilter.class))).thenReturn(filteredBooks);
 
         mockMvc.perform(post("/api/books/search")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(filter)))
             .andExpect(status().isOk())
@@ -172,7 +184,9 @@ class BookRestControllerTest {
 
         when(commentService.findAllByBookId(1L)).thenReturn(Collections.singletonList(comment));
 
-        mockMvc.perform(get("/api/books/{bookId}/comments", 1L))
+        mockMvc.perform(get("/api/books/{bookId}/comments", 1L)
+                .with(csrf())
+            )
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$", org.hamcrest.Matchers.hasSize(1)))

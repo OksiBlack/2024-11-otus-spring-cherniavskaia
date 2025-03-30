@@ -3,10 +3,8 @@ package ru.otus.hw.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.exception.EntityNotFoundException;
 import ru.otus.hw.model.management.User;
-import ru.otus.hw.repository.management.AuthorityRepository;
 import ru.otus.hw.repository.management.UserRepository;
 import ru.otus.hw.repository.spec.UserSpecifications;
 
@@ -27,12 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JpaUserDetailsService implements JpaUserDetailsManager {
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
-    private final SimpleAuthorityMapper simpleAuthorityMapper;
+
     private SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder
         .getContextHolderStrategy();
-//    private AuthenticationManager authenticationManager;
-
     @Transactional
     @Override
     public void createUser(UserDetails user) {

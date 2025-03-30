@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,18 +33,21 @@ public class AuthorRestController {
 
     private final AuthorService authorService;
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_authors:read')")
     @Operation(summary = "List authors", description = "List authors.")
     @GetMapping(produces = "application/json")
     public List<AuthorDto> listAuthors() {
         return authorService.findAll();
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_authors:read')")
     @Operation(summary = "Get author by id.", description = "Get author by id.")
     @GetMapping("/{authorId}")
     public AuthorDto getById(@PathVariable Long authorId) {
         return authorService.findById(authorId);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_authors:write')")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(summary = "Create author.", description = "Create author.")
     @PostMapping
@@ -52,6 +56,7 @@ public class AuthorRestController {
         return authorService.save(authorDto);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_authors:write')")
     @Operation(summary = "Update author by id.", description = "Update author by id.")
     @PutMapping("/{authorId}")
     public AuthorDto updateAuthor(@PathVariable @NotNull Long authorId,
@@ -61,6 +66,7 @@ public class AuthorRestController {
         return authorService.save(authorDto);
     }
 
+    @PreAuthorize(value = "hasRole('ADMIN') or hasAuthority('SCOPE_authors:write')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete author by id.", description = "Delete author by id.")
     @DeleteMapping("/{authorId}")

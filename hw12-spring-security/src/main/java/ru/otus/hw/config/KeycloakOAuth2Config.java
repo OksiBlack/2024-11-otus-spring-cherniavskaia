@@ -1,88 +1,41 @@
 package ru.otus.hw.config;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
-import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import ru.otus.hw.config.annotation.KeycloakEnabled;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import static org.springframework.security.config.Customizer.withDefaults;
-
-@KeycloakEnabled
 @Configuration
 public class KeycloakOAuth2Config {
 
+    @Order(value = SecurityProperties.BASIC_AUTH_ORDER - 200)
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler) throws Exception {
-        return http.authorizeHttpRequests(authorise ->
-                authorise
-                    .requestMatchers("/",
-                        "/static/**",
-                        "/images/**",
-                        "/swagger-ui/index.html",
-                        "/swagger*/**",
-                        "/v3*/api-docs",
-                        "actuator/**"
-                    )
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
-            .csrf(AbstractHttpConfigurer::disable)
-            .exceptionHandling(authorise -> authorise.accessDeniedPage("/access-denied"))
-            .oauth2Login(withDefaults())
-            .logout(logout ->
-                logout.logoutSuccessHandler(oidcLogoutSuccessHandler)).build();
-    }
+    public SecurityFilterChain jwtSecurityFilterChain(HttpSecurity http,
+                                                      KeycloakJwtAuthenticationConverter keycloakJwtAuthenticationConverter) throws Exception {
+        http.securityMatcher("/api/**");
+        http.authorizeHttpRequests((requests) ->
 
-    @Bean
-    @SuppressWarnings("unchecked")
-    public GrantedAuthoritiesMapper userAuthoritiesMapper() {
-        return new KeycloakOidcGrantedAuthoritiesMapper();
-    }
+            requests.requestMatchers("/api/management/**").hasRole("ADMIN")
+                .requestMatchers("/api/**")
+                .authenticated()
+        );
 
-    @Bean
-    public OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler(ClientRegistrationRepository clientRegistrationRepository) {
-        return new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-    }
-
-    @Bean
-    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
-    }
-
-    private static class KeycloakOidcGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper {
-        @Override
-        public Collection<? extends GrantedAuthority> mapAuthorities(Collection<? extends GrantedAuthority> authorities) {
-            Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-            authorities.forEach(authority -> {
-                if (authority instanceof OidcUserAuthority oidcUserAuthority) {
-                    OidcUserInfo userInfo = oidcUserAuthority.getUserInfo();
-                    Map<String, Object> realmAccess = userInfo.getClaim("realm_access");
-                    Collection<String> realmRoles;
-                    if (realmAccess != null
-                        && (realmRoles = (Collection<String>) realmAccess.get("roles")) != null) {
-                        realmRoles
-                            .forEach(role -> mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role)));
+        http.oauth2ResourceServer((resourceServer) -> {
+                resourceServer.jwt(jwt -> {
+                        jwt.jwtAuthenticationConverter(keycloakJwtAuthenticationConverter);
                     }
-                }
-            });
-            return mappedAuthorities;
-        }
+                );
+            }
+        );
+
+        return http.build();
     }
+
+    @Bean
+    public KeycloakJwtAuthenticationConverter keycloakJwtAuthenticationConverter() {
+        return new KeycloakJwtAuthenticationConverter();
+    }
+
 }

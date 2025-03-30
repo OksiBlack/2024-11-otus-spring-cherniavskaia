@@ -28,6 +28,15 @@ public class TestData {
     public static Map<Long, List<Comment>> getDbMapCommentsByIdBook() {
         return PredefinedComments.getBookCommentMap();
     }
+
+
+    public static final class RoleNames{
+        public static final String ADMIN = "ADMIN";
+
+        public static final String READER = "READER";
+
+        public static final String EDITOR = "EDITOR";
+    }
 }
 
 

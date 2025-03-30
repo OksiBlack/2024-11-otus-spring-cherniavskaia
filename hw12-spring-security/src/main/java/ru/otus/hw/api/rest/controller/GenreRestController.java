@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import java.util.List;
 public class GenreRestController {
     private final GenreService genreService;
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_genres:read')")
     @Operation(description = "Get genre by id.", summary = "Get genre by id.")
     @GetMapping(value = "/{id}",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
@@ -38,6 +40,7 @@ public class GenreRestController {
         );
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_genres:read')")
     @Operation(description = "List all genres.", summary = "List all genres.")
     @GetMapping(
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,6 +48,7 @@ public class GenreRestController {
         return genreService.findAll();
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_genres:write')")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(description = "Create new genre.", summary = "Create new genre.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -58,6 +62,7 @@ public class GenreRestController {
         return genreService.save(theGenre);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_genres:write')")
     @Operation(description = "Update genre.", summary = "Update genre.")
     @PutMapping(value = "/{genreId}",
         consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -70,6 +75,7 @@ public class GenreRestController {
         return genreService.save(genreDto);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN') or hasAuthority('SCOPE_genres:write')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Operation(description = "Delete genre.", summary = "Delete genre.")
     @DeleteMapping("/{genreId}")

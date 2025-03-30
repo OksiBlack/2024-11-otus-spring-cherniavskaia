@@ -3,12 +3,13 @@ package ru.otus.hw.api.rest.controller.management;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,7 @@ public class UserController {
         return ResponseEntity.ok(convertToDto(user));
     }
 
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserCreateRequest userCreateRequest) {
         User user = new User();
@@ -55,7 +57,7 @@ public class UserController {
         user.setLastName(userCreateRequest.getLastName());
         user.setMiddleName(userCreateRequest.getMiddleName());
         user.setBirthday(userCreateRequest.getBirthday());
-        user.setPassword(userCreateRequest.getPassword()); // Password will be encoded in JpaUserDetailsService
+        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword())); // Password will be encoded in JpaUserDetailsService
 
         user.setRoles(userCreateRequest.getRoleIds().stream()
             .map(authorityService::getAuthorityById)
@@ -66,7 +68,8 @@ public class UserController {
         return new ResponseEntity<>(convertToDto(user), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{login}")
+    @PreAuthorize(value = "hasRole('ADMIN')")
+    @PatchMapping("/{login}")
     public ResponseEntity<UserDto> updateUser(@PathVariable String login, @RequestBody UserUpdateRequest userUpdateRequest) {
         User existingUser = (User) userDetailsService.loadUserByUsername(login);
 
@@ -83,6 +86,7 @@ public class UserController {
         return ResponseEntity.ok(convertToDto(existingUser));
     }
 
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @DeleteMapping("/{login}")
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         if (!userDetailsService.userExists(login)) {
