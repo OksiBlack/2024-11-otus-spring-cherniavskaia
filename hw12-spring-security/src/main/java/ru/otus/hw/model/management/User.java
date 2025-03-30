@@ -17,13 +17,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.repository.EntityGraphNames;
 
 import java.time.LocalDate;
@@ -32,7 +28,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @NamedEntityGraph(
-   name = EntityGraphNames.USER_ROLES_ENTITY_GRAPH,
+    name = EntityGraphNames.USER_ROLES_ENTITY_GRAPH,
     attributeNodes = @NamedAttributeNode(
         value = "roles"
     )
@@ -53,8 +49,11 @@ public class User implements UserDetails {
     private String login;
 
     private String firstName;
+
     private String lastName;
+
     private String middleName;
+
     private LocalDate birthday;
 
     @Column(nullable = false)
@@ -75,6 +74,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
     }
+
     @Override
     public String getPassword() {
         return password;

@@ -29,13 +29,14 @@ class SecurityConfig {
 
     @Order(value = SecurityProperties.BASIC_AUTH_ORDER - 100)
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                            AuthenticationManager authenticationManager
+    ) throws Exception {
         http.securityMatcher("/**");
         http.authorizeHttpRequests(authorise ->
                 authorise
                     .requestMatchers("/",
-                        "/static/**",
-                        "/images/**",
+                        "/static/**", "/images/**",
                         "/swagger-ui/index.html",
                         "/swagger*/**",
                         "/v3*/api-docs/**",
@@ -71,7 +72,10 @@ class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, DaoAuthenticationProvider jpaAuthenticationProvider) throws Exception {
+    public AuthenticationManager authenticationManager(
+        HttpSecurity http,
+        DaoAuthenticationProvider jpaAuthenticationProvider
+    ) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
             .authenticationProvider(jpaAuthenticationProvider)
             .build();

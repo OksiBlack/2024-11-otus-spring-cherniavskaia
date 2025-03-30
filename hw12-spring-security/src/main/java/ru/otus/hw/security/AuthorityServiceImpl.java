@@ -1,6 +1,5 @@
 package ru.otus.hw.security;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.hw.exception.EntityNotFoundException;
@@ -8,6 +7,7 @@ import ru.otus.hw.model.management.Authority;
 import ru.otus.hw.repository.management.AuthorityRepository;
 
 import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
@@ -22,7 +22,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public Authority getAuthorityById(Long id) {
         return authorityRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Authority with id " + id + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException("Authority with id " + id + " not found"));
     }
 
     @Override

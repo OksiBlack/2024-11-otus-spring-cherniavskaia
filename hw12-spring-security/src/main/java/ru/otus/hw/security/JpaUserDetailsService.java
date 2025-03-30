@@ -18,6 +18,7 @@ import ru.otus.hw.repository.management.UserRepository;
 import ru.otus.hw.repository.spec.UserSpecifications;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -27,6 +28,7 @@ public class JpaUserDetailsService implements JpaUserDetailsManager {
 
     private SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder
         .getContextHolderStrategy();
+
     @Transactional
     @Override
     public void createUser(UserDetails user) {
@@ -70,22 +72,15 @@ public class JpaUserDetailsService implements JpaUserDetailsManager {
                 "Can not change password as no Authentication object found in context for current user.");
         }
         String username = currentUser.getName();
-        // If an authentication manager has been set, re-authenticate the user with the
-        // supplied password.
-//        if (this.authenticationManager != null) {
-//            log.debug("Reauthenticating user [{}] for password change request.", username);
-//            this.authenticationManager.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(username, oldPassword));
-//        } else {
-//            log.debug("No authentication manager set. Password won't be re-checked.");
-//        }
+
         log.debug("Changing password for user [{}]", username);
 
         User userDetails = loadUserByUsername(username);
-        if(userDetails.getPassword()!=oldPassword){
+        if (!Objects.equals(userDetails.getPassword(), oldPassword)) {
             throw new AccessDeniedException("Old password mismatch for current user [%s]".formatted(username));
         }
 
-            userDetails.setPassword(newPassword);
+        userDetails.setPassword(newPassword);
 
         Authentication authentication = createNewAuthentication(userDetails);
         SecurityContext context = this.securityContextHolderStrategy.createEmptyContext();

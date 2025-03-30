@@ -57,7 +57,7 @@ public class UserController {
         user.setLastName(userCreateRequest.getLastName());
         user.setMiddleName(userCreateRequest.getMiddleName());
         user.setBirthday(userCreateRequest.getBirthday());
-        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword())); // Password will be encoded in JpaUserDetailsService
+        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
 
         user.setRoles(userCreateRequest.getRoleIds().stream()
             .map(authorityService::getAuthorityById)
@@ -70,7 +70,10 @@ public class UserController {
 
     @PreAuthorize(value = "hasRole('ADMIN')")
     @PatchMapping("/{login}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable String login, @RequestBody UserUpdateRequest userUpdateRequest) {
+    public ResponseEntity<UserDto> updateUser(
+        @PathVariable String login,
+        @RequestBody UserUpdateRequest userUpdateRequest
+    ) {
         User existingUser = (User) userDetailsService.loadUserByUsername(login);
 
         existingUser.setFirstName(userUpdateRequest.getFirstName());

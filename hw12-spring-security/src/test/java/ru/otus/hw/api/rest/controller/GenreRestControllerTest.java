@@ -2,16 +2,17 @@ package ru.otus.hw.api.rest.controller;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import ru.otus.hw.config.TestConfig;
 import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.dto.request.SaveGenreRequest;
 import ru.otus.hw.service.GenreService;
@@ -27,7 +28,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-@Import({GenreServiceImpl.class})
+@Import({GenreServiceImpl.class, TestConfig.class})
 @WebMvcTest(GenreRestController.class)
 @WithMockUser(roles = {RoleNames.ADMIN})
 class GenreRestControllerTest {
@@ -38,8 +39,8 @@ class GenreRestControllerTest {
     @MockitoBean
     private GenreService genreService;
 
-    @InjectMocks
-    private GenreRestController genreRestController;
+    @MockitoBean
+    private OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
 
     @Test
     void listGenresTest() throws Exception {
