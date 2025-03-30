@@ -10,8 +10,12 @@ import java.util.Set;
 @Builder
 public class UserUpdateRequest {
     private String firstName;
+
     private String lastName;
+
     private String middleName;
+
     private LocalDate birthday;
+
     private Set<Long> roleIds;
 }

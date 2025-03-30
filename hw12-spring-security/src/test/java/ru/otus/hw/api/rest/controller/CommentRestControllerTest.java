@@ -5,10 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.otus.hw.config.TestConfig;
 import ru.otus.hw.dto.CommentDto;
 import ru.otus.hw.dto.request.SaveCommentRequest;
 import ru.otus.hw.service.CommentService;
@@ -32,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WithMockUser(roles = {TestData.RoleNames.READER})
+@Import({TestConfig.class})
 @WebMvcTest(CommentRestController.class)
 class CommentRestControllerTest {
 
@@ -40,6 +45,12 @@ class CommentRestControllerTest {
 
     @MockitoBean
     private CommentService commentService;
+
+    @MockitoBean
+    private OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
+
+    @MockitoBean
+    private ClientRegistrationRepository clientRegistrationRepository;
 
     @InjectMocks
     private CommentRestController commentRestController;

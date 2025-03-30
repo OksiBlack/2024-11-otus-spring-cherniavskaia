@@ -12,8 +12,10 @@ public class KeycloakOAuth2Config {
 
     @Order(value = SecurityProperties.BASIC_AUTH_ORDER - 200)
     @Bean
-    public SecurityFilterChain jwtSecurityFilterChain(HttpSecurity http,
-                                                      KeycloakJwtAuthenticationConverter keycloakJwtAuthenticationConverter) throws Exception {
+    public SecurityFilterChain jwtSecurityFilterChain(
+        HttpSecurity http,
+        KeycloakJwtAuthenticationConverter keycloakJwtAuthenticationConverter
+    ) throws Exception {
         http.securityMatcher("/api/**");
         http.authorizeHttpRequests((requests) ->
 

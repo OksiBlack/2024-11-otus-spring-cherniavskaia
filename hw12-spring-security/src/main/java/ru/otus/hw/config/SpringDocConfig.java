@@ -30,42 +30,58 @@ public class SpringDocConfig {
             .addSecurityItem(new SecurityRequirement().addList("resourceOwnerPassword"))
             .components(new Components()
                 .addSecuritySchemes("bearerToken",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("bearer")
-                        .bearerFormat("JWT")
+                    createBearerTokenSchema()
                 )
                 .addSecuritySchemes("authorizationCode",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.OAUTH2)
-                        .flows(new OAuthFlows()
-                            .authorizationCode(new OAuthFlow()
-                                .authorizationUrl(authorizationUrl)
-                                .tokenUrl(tokenUrl)
-                                .scopes(new Scopes()))
-                        )
+                    createAuthorizationCodeSchema()
                 )
                 .addSecuritySchemes("clientCredentials",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.OAUTH2)
-                        .flows(new OAuthFlows()
-                            .clientCredentials(new OAuthFlow()
-                                .tokenUrl(tokenUrl)
-                                .scopes(new Scopes()))
-                        )
+                    createClientCredentialsSchema()
                 )
                 .addSecuritySchemes("resourceOwnerPassword",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.OAUTH2)
-                        .flows(new OAuthFlows()
-                            .password(new OAuthFlow()
-                                .tokenUrl(tokenUrl)
-                                .scopes(new Scopes())
-                            )
-                        )
+                    createResourceOwnerSchema()
                 )
             )
             .info(new Info().title("Book Store API").version("1.0.0"));
+    }
+
+    private SecurityScheme createBearerTokenSchema() {
+        return new SecurityScheme()
+            .type(SecurityScheme.Type.HTTP)
+            .scheme("bearer")
+            .bearerFormat("JWT");
+    }
+
+    private SecurityScheme createAuthorizationCodeSchema() {
+        return new SecurityScheme()
+            .type(SecurityScheme.Type.OAUTH2)
+            .flows(new OAuthFlows()
+                .authorizationCode(new OAuthFlow()
+                    .authorizationUrl(authorizationUrl)
+                    .tokenUrl(tokenUrl)
+                    .scopes(new Scopes()))
+            );
+    }
+
+    private SecurityScheme createResourceOwnerSchema() {
+        return new SecurityScheme()
+            .type(SecurityScheme.Type.OAUTH2)
+            .flows(new OAuthFlows()
+                .password(new OAuthFlow()
+                    .tokenUrl(tokenUrl)
+                    .scopes(new Scopes())
+                )
+            );
+    }
+
+    private SecurityScheme createClientCredentialsSchema() {
+        return new SecurityScheme()
+            .type(SecurityScheme.Type.OAUTH2)
+            .flows(new OAuthFlows()
+                .clientCredentials(new OAuthFlow()
+                    .tokenUrl(tokenUrl)
+                    .scopes(new Scopes()))
+            );
     }
 }
 

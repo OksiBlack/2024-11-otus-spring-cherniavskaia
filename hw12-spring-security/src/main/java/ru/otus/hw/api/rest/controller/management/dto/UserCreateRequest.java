@@ -10,10 +10,16 @@ import java.util.Set;
 @Builder
 public class UserCreateRequest {
     private String login;
+
     private String firstName;
+
     private String lastName;
+
     private String middleName;
+
     private LocalDate birthday;
+
     private String password;
+
     private Set<Long> roleIds;
 }
