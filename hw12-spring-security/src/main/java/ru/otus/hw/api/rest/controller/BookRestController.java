@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class BookRestController {
 
     private final CommentService commentService;
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_books:read')")
     @Operation(summary = "List books.", description = "List books.")
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
     )
@@ -47,6 +49,7 @@ public class BookRestController {
         return bookService.findAll();
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_books:read')")
     @Operation(summary = "Get book by id.", description = "Get book by id.")
     @GetMapping("/{id}")
     public BookDto getById(@PathVariable("id") Long bookId) {
@@ -55,6 +58,7 @@ public class BookRestController {
         );
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_books:write')")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(summary = "Create book.", description = "Create book.")
     @PostMapping
@@ -62,6 +66,7 @@ public class BookRestController {
         return bookService.save(saveBookRequest);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_books:write')")
     @Operation(summary = "Update book by id.", description = "Update book by id.")
     @PutMapping("/{bookId}")
     public BookDto update(@PathVariable("bookId") Long bookId, @RequestBody @Valid SaveBookRequest saveBookRequest) {
@@ -69,6 +74,7 @@ public class BookRestController {
         return bookService.save(saveBookRequest);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN') or hasAuthority('SCOPE_books:write')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete book by id.", description = "Delete book by id.")
     @DeleteMapping("/{bookId}")
@@ -91,6 +97,7 @@ public class BookRestController {
         return commentService.findAllByBookId(bookId);
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(summary = "Create comment for the book.", description = "Create comment for the book.")
     @PostMapping(value = "{bookId}/comments",

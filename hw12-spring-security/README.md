@@ -24,7 +24,28 @@
 role: ADMIN, EDITOR
 2) bilbo/bilbo
 role: READER
-3) gandalf/gandalf
-roles: READER, EDITOR
+3) aragorn/aragorn
+roles: EDITOR
 4) gandalf/gandalf
 roles: READER, EDITOR
+
+
+
+Все rest контроллеры (API в endpoints) защищены с помощью Keycloak, resource server, используются jwt токены.
+
+1) client credentials token
+   curl --location 'http://localhost:58080/realms/bookstore/protocol/openid-connect/token' \
+   --header 'Content-Type: application/x-www-form-urlencoded' \
+   --data-urlencode 'client_id=bookstore-client' \
+   --data-urlencode 'client_secret=bookstore-client-secret' \
+   --data-urlencode 'grant_type=client_credentials'
+2) direct access grant
+
+curl --location 'http://localhost:58080/realms/bookstore/protocol/openid-connect/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--header 'X-API-KEY: ••••••' \
+--header 'Cookie: JSESSIONID=A656BA251224B2CFB751780E7B0065BC' \
+--data-urlencode 'client_id=bookstore-public-client' \
+--data-urlencode 'grant_type=password' \
+--data-urlencode 'username=admin' \
+--data-urlencode 'password=nimda'

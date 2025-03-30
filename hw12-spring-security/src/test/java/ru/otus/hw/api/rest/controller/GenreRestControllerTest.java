@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -15,6 +16,7 @@ import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.dto.request.SaveGenreRequest;
 import ru.otus.hw.service.GenreService;
 import ru.otus.hw.service.GenreServiceImpl;
+import ru.otus.hw.testObjects.TestData.RoleNames;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -23,9 +25,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @Import({GenreServiceImpl.class})
 @WebMvcTest(GenreRestController.class)
+@WithMockUser(roles = {RoleNames.ADMIN})
 class GenreRestControllerTest {
 
     @Autowired
@@ -110,12 +114,13 @@ class GenreRestControllerTest {
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/genres")
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf())
                 .content("""
-                        {
-                            "name": "Fantasy",
-                            "description": "Fantasy genre"
-                        }
-                        """))
+                    {
+                        "name": "Fantasy",
+                        "description": "Fantasy genre"
+                    }
+                    """))
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Fantasy"));
@@ -125,6 +130,7 @@ class GenreRestControllerTest {
         assert "Fantasy".equals(captor.getValue().getName());
     }
 
+    @WithMockUser(roles = {RoleNames.EDITOR})
     @Test
     void updateGenreTest() throws Exception {
         // Given
@@ -140,25 +146,29 @@ class GenreRestControllerTest {
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.put("/api/genres/{genreId}", genreId)
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf())
                 .content("""
-                        {
-                            "name": "Updated Fantasy",
-                            "description": "Updated description"
-                        }
-                        """))
+                    {
+                        "name": "Updated Fantasy",
+                        "description": "Updated description"
+                    }
+                    """))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Updated Fantasy"));
 
         verify(genreService, times(1)).save(any(GenreDto.class));
     }
 
+    @WithMockUser(roles = {RoleNames.ADMIN})
     @Test
     void deleteGenreTest() throws Exception {
         // Given
         Long genreId = 1L;
 
         // When & Then
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/genres/{genreId}", genreId))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/genres/{genreId}", genreId)
+                .with(csrf())
+            )
             .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         verify(genreService, times(1)).deleteById(genreId);

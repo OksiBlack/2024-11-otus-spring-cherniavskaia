@@ -1,7 +1,9 @@
 package ru.otus.hw.config;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,9 +27,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 )
 class SecurityConfig {
 
-
+    @Order(value = SecurityProperties.BASIC_AUTH_ORDER - 100)
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+        http.securityMatcher("/**");
         http.authorizeHttpRequests(authorise ->
                 authorise
                     .requestMatchers("/",
@@ -35,7 +38,7 @@ class SecurityConfig {
                         "/images/**",
                         "/swagger-ui/index.html",
                         "/swagger*/**",
-                        "/v3*/api-docs",
+                        "/v3*/api-docs/**",
                         "actuator/**"
                     )
                     .permitAll()

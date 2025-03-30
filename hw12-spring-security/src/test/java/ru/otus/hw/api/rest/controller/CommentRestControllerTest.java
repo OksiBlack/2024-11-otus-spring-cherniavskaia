@@ -6,11 +6,13 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.dto.CommentDto;
 import ru.otus.hw.dto.request.SaveCommentRequest;
 import ru.otus.hw.service.CommentService;
+import ru.otus.hw.testObjects.TestData;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -20,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -28,9 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@WithMockUser(roles = {TestData.RoleNames.READER})
 @WebMvcTest(CommentRestController.class)
- class CommentRestControllerTest {
+class CommentRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @Autowired
     private ObjectMapper objectMapper; // Used for JSON serialization
-
 
     @Test
     void testGetCommentById() throws Exception {
@@ -67,6 +69,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             .andExpect(jsonPath("$.text").value("This is a comment"));
     }
 
+    @WithMockUser(roles = {TestData.RoleNames.EDITOR})
     @Test
     void testCreateComment() throws Exception {
         SaveCommentRequest saveCommentRequest = SaveCommentRequest.builder()
@@ -88,7 +91,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         mockMvc.perform(post("/api/comments")
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf())
                 .content(objectMapper.writeValueAsString(saveCommentRequest)))
+
             .andExpect(status().isCreated())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(2L))
@@ -96,6 +101,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             .andExpect(jsonPath("$.text").value("This is a new comment"));
     }
 
+    @WithMockUser(roles = {TestData.RoleNames.EDITOR})
     @Test
     void testUpdateComment() throws Exception {
         Long commentId = 1L;
@@ -117,6 +123,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         when(commentService.save(any(CommentDto.class))).thenReturn(updatedCommentDto);
 
         mockMvc.perform(put("/api/comments/{commentId}", commentId)
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(saveCommentRequest)))
             .andExpect(status().isOk())
@@ -126,11 +133,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             .andExpect(jsonPath("$.text").value("Updated comment text"));
     }
 
+    @WithMockUser(roles = {TestData.RoleNames.ADMIN})
     @Test
     void testDeleteComment() throws Exception {
         Long commentId = 1L;
 
-        mockMvc.perform(delete("/api/comments/{commentId}", commentId))
+        mockMvc.perform(delete("/api/comments/{commentId}", commentId)
+                .with(csrf())
+            )
             .andExpect(status().isNoContent());
 
         verify(commentService, times(1)).deleteById(commentId);
