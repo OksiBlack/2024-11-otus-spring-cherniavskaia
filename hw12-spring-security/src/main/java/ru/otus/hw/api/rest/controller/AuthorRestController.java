@@ -23,10 +23,13 @@ import ru.otus.hw.service.AuthorService;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
+
 @Tag(name = "Author rest api", description = "Api for author operations.")
 @RestController
 @RequestMapping(value = "/api/authors",
-    produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
+    produces = {APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE}
 )
 @RequiredArgsConstructor
 public class AuthorRestController {
@@ -35,14 +38,16 @@ public class AuthorRestController {
 
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_authors:read')")
     @Operation(summary = "List authors", description = "List authors.")
-    @GetMapping(produces = "application/json")
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<AuthorDto> listAuthors() {
         return authorService.findAll();
     }
 
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR', 'READER') or hasAuthority('SCOPE_authors:read')")
     @Operation(summary = "Get author by id.", description = "Get author by id.")
-    @GetMapping("/{authorId}")
+    @GetMapping(value = "/{authorId}",
+    produces = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE}
+    )
     public AuthorDto getById(@PathVariable Long authorId) {
         return authorService.findById(authorId);
     }
@@ -50,7 +55,10 @@ public class AuthorRestController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_authors:write')")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(summary = "Create author.", description = "Create author.")
-    @PostMapping
+    @PostMapping(
+        produces = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE},
+        consumes = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE}
+    )
     public AuthorDto create(@Valid @RequestBody SaveAuthorRequest createAuthorRequest) {
         AuthorDto authorDto = convertToAuthorDto(null, createAuthorRequest);
         return authorService.save(authorDto);
@@ -58,7 +66,10 @@ public class AuthorRestController {
 
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR') or hasAuthority('SCOPE_authors:write')")
     @Operation(summary = "Update author by id.", description = "Update author by id.")
-    @PutMapping("/{authorId}")
+    @PutMapping(value = "/{authorId}",
+        produces = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE},
+        consumes = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE}
+    )
     public AuthorDto updateAuthor(@PathVariable @NotNull Long authorId,
                                   @Valid @RequestBody SaveAuthorRequest createAuthorRequest) {
         AuthorDto authorDto = convertToAuthorDto(authorId, createAuthorRequest);

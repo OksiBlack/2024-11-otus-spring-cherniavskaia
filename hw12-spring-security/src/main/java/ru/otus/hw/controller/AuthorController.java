@@ -1,8 +1,7 @@
 package ru.otus.hw.controller;
 
 import jakarta.validation.Valid;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/authors")
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -46,6 +44,7 @@ public class AuthorController {
         return "single-author";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
         // create model attribute to bind form data
@@ -54,6 +53,7 @@ public class AuthorController {
         return "author-form";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("authorId") Long theId, Model theModel) {
         //get the author from the service
@@ -63,6 +63,7 @@ public class AuthorController {
         return "author-form";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @PostMapping("/save")
     public String saveAuthor(@ModelAttribute("author") @Valid AuthorDto theAuthor, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -74,6 +75,7 @@ public class AuthorController {
         return "redirect:/authors/list";
     }
 
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping("/delete")
     public String delete(@RequestParam("authorId") Long theId) {
         // delete the author
