@@ -18,22 +18,16 @@ public class SpringDocConfig {
     @Value("${spring.security.oauth2.client.provider.keycloak.token-uri:}")
     private String tokenUrl;
 
-    @Value("${spring.security.oauth2.client.provider.keycloak.authorization-uri:}")
-    private String authorizationUrl;
 
     @Bean
     public OpenAPI bookStoreOpenApi() {
         return new OpenAPI()
             .addSecurityItem(new SecurityRequirement().addList("bearerToken"))
-            .addSecurityItem(new SecurityRequirement().addList("authorizationCode"))
             .addSecurityItem(new SecurityRequirement().addList("clientCredentials"))
             .addSecurityItem(new SecurityRequirement().addList("resourceOwnerPassword"))
             .components(new Components()
                 .addSecuritySchemes("bearerToken",
                     createBearerTokenSchema()
-                )
-                .addSecuritySchemes("authorizationCode",
-                    createAuthorizationCodeSchema()
                 )
                 .addSecuritySchemes("clientCredentials",
                     createClientCredentialsSchema()
@@ -50,17 +44,6 @@ public class SpringDocConfig {
             .type(SecurityScheme.Type.HTTP)
             .scheme("bearer")
             .bearerFormat("JWT");
-    }
-
-    private SecurityScheme createAuthorizationCodeSchema() {
-        return new SecurityScheme()
-            .type(SecurityScheme.Type.OAUTH2)
-            .flows(new OAuthFlows()
-                .authorizationCode(new OAuthFlow()
-                    .authorizationUrl(authorizationUrl)
-                    .tokenUrl(tokenUrl)
-                    .scopes(new Scopes()))
-            );
     }
 
     private SecurityScheme createResourceOwnerSchema() {

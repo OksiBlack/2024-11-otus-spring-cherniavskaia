@@ -825,8 +825,8 @@
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : true,
     "nodeReRegistrationTimeout" : -1,
-    "defaultClientScopes" : [ "web-origins", "acr", "genres:read", "profile", "roles", "books:write", "authors:write", "books:read", "basic", "authors:read", "email", "genres:write" ],
-    "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "microprofile-jwt" ]
+    "defaultClientScopes" : [ "web-origins", "acr", "genres:read", "profile", "roles", "books:read", "basic", "authors:read", "email"],
+    "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "microprofile-jwt", "genres:write", "books:write", "authors:write" ]
   }, {
     "id" : "50a2faa1-465d-4a8b-b8bd-053f9b020c0a",
     "clientId" : "broker",

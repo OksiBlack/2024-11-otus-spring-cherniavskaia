@@ -1,6 +1,7 @@
 package ru.otus.hw.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/genres")
 public class GenreController {
- private    final GenreService genreService;
+    private final GenreService genreService;
 
     public GenreController(GenreService genreService) {
         this.genreService = genreService;
@@ -47,6 +48,7 @@ public class GenreController {
         return "list-genres";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
 
@@ -58,6 +60,7 @@ public class GenreController {
         return "genre-form";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("genreId") Long theId, Model theModel) {
         //get the genre from the service
@@ -69,6 +72,7 @@ public class GenreController {
         return "genre-form";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @PostMapping("/save")
     public String saveGenre(@ModelAttribute("genre") @Valid GenreDto genre, BindingResult bindingResult) {
 
@@ -82,6 +86,7 @@ public class GenreController {
         return "redirect:/genres/list";
     }
 
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping("/delete")
     public String delete(@RequestParam("genreId") Long theId) {
 
@@ -90,6 +95,5 @@ public class GenreController {
 
         // redirect to /genre/list
         return "redirect:/genres/list";
-
     }
 }

@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,6 +71,7 @@ public class BookController {
         return "single-book";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
 
@@ -81,6 +83,7 @@ public class BookController {
         return "book-form";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("bookId") Long bookId, Model theModel) {
         //get the book from the service
@@ -95,12 +98,12 @@ public class BookController {
         return "book-form";
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'EDITOR')")
     @PostMapping("/save")
     public String saveBook(@ModelAttribute("book") @Valid SaveBookRequest saveBookRequest,
                            BindingResult bindingResult,
                            Model theModel
     ) {
-        // save the book
 
         if (bindingResult.hasErrors()) {
             addAuthorsAndGenresToModel(theModel);
@@ -112,6 +115,7 @@ public class BookController {
         return "redirect:/books/list";
     }
 
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping("/delete")
     public String delete(@RequestParam("bookId") Long theId) {
         // delete the book

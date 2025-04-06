@@ -27,7 +27,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
-    public ResponseEntity<ProblemDetail> authorizationDeniedException(EntityNotFoundException ex) {
+    public ResponseEntity<ProblemDetail> authorizationDeniedException(AuthorizationDeniedException ex) {
         log.error(ex.getMessage(), ex);
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN,
             ex.getMessage());
