@@ -1,5 +1,6 @@
 package ru.otus.hw.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.With;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +20,9 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@With
 public class SaveBookRequest {
+    @JsonIgnore
     private Long id;
 
     @NotNull

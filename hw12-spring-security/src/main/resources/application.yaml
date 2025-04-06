@@ -1,5 +1,10 @@
 server:
   port: 9090
+
+keycloak:
+  server:
+    base-url: "${KEYCLOAK_BASE_URL:http://localhost:58080}"
+
 spring:
   datasource:
     schema: bookstore
@@ -25,6 +30,19 @@ spring:
   shell:
     interactive:
       enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${keycloak.server.base-url}/realms/bookstore"
+          jwk-set-uri: "${keycloak.server.base-url}/realms/bookstore/protocol/openid-connect/certs"
+
+
+  mvc:
+    log-request-details: true
+    log-resolved-exception: true
+    problemdetails:
+      enabled: true
 
 logging:
   level:
@@ -33,9 +51,13 @@ logging:
     liquibase: "debug"
 
 springdoc:
+
   show-oauth2-endpoints: true
   show-actuator: true
   show-login-endpoint: true
   swagger-ui:
     disable-swagger-default-url: true
     try-it-out-enabled: true
+    oauth2-redirect-url: "${keycloak.server.base-url}/login/oauth2/code/keycloak"
+
+

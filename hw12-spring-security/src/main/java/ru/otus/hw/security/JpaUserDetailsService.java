@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
+@Service
 public class JpaUserDetailsService implements JpaUserDetailsManager {
     private final UserRepository userRepository;
 

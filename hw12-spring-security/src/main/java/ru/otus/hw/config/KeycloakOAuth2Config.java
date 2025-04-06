@@ -1,18 +1,17 @@
 package ru.otus.hw.config;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Profile("keycloak")
 @Configuration
 public class KeycloakOAuth2Config {
 
-    @Order(value = SecurityProperties.BASIC_AUTH_ORDER - 200)
+    @Order(value = Ordered.HIGHEST_PRECEDENCE)
     @Bean
     public SecurityFilterChain jwtSecurityFilterChain(
         HttpSecurity http,
@@ -34,6 +33,9 @@ public class KeycloakOAuth2Config {
             }
         );
 
+        http.csrf(Customizer.withDefaults());
+        http.exceptionHandling(Customizer.withDefaults());
+
         return http.build();
     }
 
@@ -41,5 +43,4 @@ public class KeycloakOAuth2Config {
     public KeycloakJwtAuthenticationConverter keycloakJwtAuthenticationConverter() {
         return new KeycloakJwtAuthenticationConverter();
     }
-
 }
