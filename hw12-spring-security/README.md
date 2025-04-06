@@ -26,13 +26,9 @@ role: ADMIN, EDITOR
 role: READER
 3) aragorn/aragorn
 roles: EDITOR
-4) gandalf/gandalf
-roles: READER, EDITOR
-
 
 
 Все rest контроллеры (API в endpoints) защищены с помощью Keycloak, resource server, используются jwt токены.
-Run with keycloak profile active.
 
 1) client credentials token
    curl --location 'http://localhost:58080/realms/bookstore/protocol/openid-connect/token' \

@@ -5,20 +5,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.otus.hw.config.TestConfig;
 import ru.otus.hw.dto.BookDto;
 import ru.otus.hw.dto.BookSearchFilter;
 import ru.otus.hw.dto.CommentDto;
 import ru.otus.hw.dto.request.SaveBookRequest;
+import ru.otus.hw.service.AuthorService;
 import ru.otus.hw.service.BookService;
 import ru.otus.hw.service.CommentService;
+import ru.otus.hw.service.GenreService;
 import ru.otus.hw.testObjects.TestData;
 
 import java.util.Arrays;
@@ -39,7 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WithMockUser(roles = {TestData.RoleNames.READER})
-@Import({TestConfig.class})
 @WebMvcTest(BookRestController.class)
 class BookRestControllerTest {
 
@@ -53,13 +52,19 @@ class BookRestControllerTest {
     private BookService bookService;
 
     @MockitoBean
+    private AuthorService authorService;
+
+    @MockitoBean
+    private CommentService commentService;
+
+    @MockitoBean
+    private GenreService genreService;
+
+    @MockitoBean
     private OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
 
     @MockitoBean
     private ClientRegistrationRepository clientRegistrationRepository;
-
-    @MockitoBean
-    private CommentService commentService;
 
     @BeforeEach
     void setUp() {
