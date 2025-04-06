@@ -7,8 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.3</version>
-        <relativePath/>
+        <version>3.4.4</version>
     </parent>
 
     <groupId>ru.otus.hw</groupId>
@@ -20,16 +19,9 @@
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.source>21</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>6.2.3</spring.version>
         <opencsv.version>5.9</opencsv.version>
-        <junit.version>5.11.3</junit.version>
-        <mockito.version>5.10.0</mockito.version>
-        <assertj.version>3.25.2</assertj.version>
-        <lombok.version>1.18.36</lombok.version>
         <checkstyle-plugin.version>3.6.0</checkstyle-plugin.version>
         <checkstyle.version>10.21.0</checkstyle.version>
-        <mockito.version>5.4.0</mockito.version>
-        <slf4j.version>2.0.16</slf4j.version>
         <spotless.version>2.43.0</spotless.version>
         <snakeyaml.version>2.3</snakeyaml.version>
         <checkstyle.config.url>
@@ -49,6 +41,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
