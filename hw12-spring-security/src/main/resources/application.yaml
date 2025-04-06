@@ -37,7 +37,6 @@ spring:
           issuer-uri: "${keycloak.server.base-url}/realms/bookstore"
           jwk-set-uri: "${keycloak.server.base-url}/realms/bookstore/protocol/openid-connect/certs"
 
-
   mvc:
     log-request-details: true
     log-resolved-exception: true
@@ -51,7 +50,6 @@ logging:
     liquibase: "debug"
 
 springdoc:
-
   show-oauth2-endpoints: true
   show-actuator: true
   show-login-endpoint: true

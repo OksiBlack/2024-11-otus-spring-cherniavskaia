@@ -5,7 +5,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -13,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.service.AuthorService;
-import ru.otus.hw.service.AuthorServiceImpl;
 
 import java.util.Arrays;
 
@@ -25,7 +23,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Import({AuthorServiceImpl.class})
 @WebMvcTest(AuthorController.class)
 @WithMockUser(roles = "READER")
 class AuthorControllerTest {

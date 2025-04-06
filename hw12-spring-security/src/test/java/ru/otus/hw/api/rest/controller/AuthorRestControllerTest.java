@@ -5,7 +5,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -13,10 +12,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ru.otus.hw.config.TestConfig;
 import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.service.AuthorService;
-import ru.otus.hw.service.AuthorServiceImpl;
 import ru.otus.hw.testObjects.TestData;
 
 import java.util.Arrays;
@@ -32,7 +29,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @WithMockUser(roles = {TestData.RoleNames.READER})
-@Import({AuthorServiceImpl.class, TestConfig.class})
 @WebMvcTest(AuthorRestController.class)
 class AuthorRestControllerTest {
 
@@ -42,14 +38,15 @@ class AuthorRestControllerTest {
     @MockitoBean
     private AuthorService authorService;
 
+    @InjectMocks
+    private AuthorRestController authorRestController;
+
+
     @MockitoBean
     private OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
 
     @MockitoBean
     private ClientRegistrationRepository clientRegistrationRepository;
-
-    @InjectMocks
-    private AuthorRestController authorRestController;
 
     @Test
     void listAuthorsTest() throws Exception {
