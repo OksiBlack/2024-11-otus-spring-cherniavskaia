@@ -6,6 +6,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
@@ -15,14 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import ru.otus.hw.security.JpaUserDetailsService;
 import ru.otus.hw.security.JpaUserPasswordService;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 public class SecurityFormLoginConfig {
     @Order(value = Ordered.HIGHEST_PRECEDENCE + 100)
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                            AuthenticationManager authenticationManager
+    SecurityFilterChain securityFilterChain(
+        HttpSecurity http,
+        AuthenticationManager authenticationManager
     ) throws Exception {
         http.securityMatcher("/**");
         http.authorizeHttpRequests(authorise ->
