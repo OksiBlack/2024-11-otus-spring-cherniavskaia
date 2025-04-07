@@ -15,9 +15,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringDocConfig {
 
-    @Value("${spring.security.oauth2.client.provider.keycloak.token-uri:}")
+    @Value("${keycloak.server.base-url}/realms/bookstore/protocol/openid-connect/token")
     private String tokenUrl;
 
+    @Value("${keycloak.server.base-url}/realms/bookstore/protocol/openid-connect/auth")
+    private String authorizationUrl;
 
     @Bean
     public OpenAPI bookStoreOpenApi() {
@@ -51,6 +53,7 @@ public class SpringDocConfig {
             .type(SecurityScheme.Type.OAUTH2)
             .flows(new OAuthFlows()
                 .password(new OAuthFlow()
+                    .authorizationUrl(authorizationUrl)
                     .tokenUrl(tokenUrl)
                     .scopes(new Scopes())
                 )
@@ -62,9 +65,9 @@ public class SpringDocConfig {
             .type(SecurityScheme.Type.OAUTH2)
             .flows(new OAuthFlows()
                 .clientCredentials(new OAuthFlow()
+                    .authorizationUrl(authorizationUrl)
                     .tokenUrl(tokenUrl)
                     .scopes(new Scopes()))
             );
     }
 }
-
