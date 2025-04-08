@@ -1,0 +1,85 @@
+keycloak:
+  server:
+    base-url: "${KEYCLOAK_BASE_URL:http://localhost:58080}"
+
+spring:
+  datasource:
+    schema: bookstore
+    username: "${BOOKSTORE_DB_USERNAME:admin}"
+    password: "${BOOKSTORE_DB_PASSWORD:nimda}"
+    url: "${BOOKSTORE_DB_URL:jdbc:postgresql://localhost:5477/bookstore}"
+    hikari:
+      schema: bookstore
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yaml
+    liquibase-schema: "public"
+    default-schema: "bookstore"
+  docker:
+    compose:
+      lifecycle-management: start_only
+      file: "docker-compose.yaml"
+  shell:
+    interactive:
+      enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${keycloak.server.base-url}/realms/bookstore"
+          jwk-set-uri: "${keycloak.server.base-url}/realms/bookstore/protocol/openid-connect/certs"
+  mvc:
+    log-request-details: true
+    log-resolved-exception: true
+    problemdetails:
+      enabled: true
+
+server:
+  port: 9090
+management:
+  server:
+    port: 9091
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      show-values: "always"
+    shutdown:
+      enabled: true
+  health:
+    show-details: "ALWAYS"
+    probes:
+      enabled: true
+    shutdown:
+      enabled: true
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+  observations:
+    key-values:
+      application: "${spring.application.name}"
+
+logging:
+  level:
+    root: "debug"
+    org.hibernate: "debug"
+    liquibase: "debug"
+
+springdoc:
+  show-oauth2-endpoints: true
+  show-actuator: true
+  show-login-endpoint: true
+  swagger-ui:
+    disable-swagger-default-url: true
+    try-it-out-enabled: true
+    oauth2-redirect-url: "${KEYCLOAK_BASE_URL}/login/oauth2/code/keycloak"
+
+

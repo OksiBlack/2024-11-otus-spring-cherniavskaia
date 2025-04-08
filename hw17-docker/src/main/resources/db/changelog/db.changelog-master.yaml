@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - include:
+      file: sql/init/bookstore-schema.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/init/users-and-authorities-schema.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/2025-01-25__01__author-add-data.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/2025-01-25__02__genres-add-data.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/2025-01-25__03__books-add-data.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/2025-01-25__04__books_genres-add-data.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/2025-01-25__05__comments-add-data.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: sql/2025-03-25__05__add-users.sql
+      relativeToChangeLogFile: true
