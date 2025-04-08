@@ -13,6 +13,9 @@ services:
       - KEYCLOAK_BASE_URL=http://keycloak:8080
     networks:
       - bookstore-network
+    depends_on:
+      - postgres
+      - keycloak
 
   postgres:
     image: postgres:17.1-alpine3.20
