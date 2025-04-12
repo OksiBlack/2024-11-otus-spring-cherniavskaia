@@ -1,0 +1,4 @@
+KEYCLOAK_BASE_URL: "http://localhost:58080"
+BOOKSTORE_DB_URL: "jdbc:postgresql://postgres:5457/bookstore"
+BOOKSTORE_DB_USERNAME: "admin"
+BOOKSTORE_DB_PASSWORD: "nimda"
