@@ -211,6 +211,7 @@
         <module>hw09-web-mvc</module>
         <module>hw10-rest-angular-spa/backend</module>
         <module>hw12-spring-security</module>
+        <module>hw13-spring-security-acl</module>
         <module>hw17-docker</module>
     </modules>
 </project>
